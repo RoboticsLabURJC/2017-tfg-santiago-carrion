@@ -1,0 +1,31 @@
+drone:
+
+  Camera:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "Camera:default -h localhost -p 9000"
+    Format: RGB8
+
+  Pose3D:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "Pose3D:default -h localhost -p 9000"
+ 
+  Navdata:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "Navdata:default -h localhost -p 9000"
+
+  Extra:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "Extra:default -h localhost -p 9000"
+
+# Following values will be divided by 10 to be used (3 --> 0.3 m/s)
+# because atof doesn't work well (Truncates the decimal part)
+
+  CMDVel:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "CMDVel:default -h 0.0.0.0 -p 9000"
+    Xmax: 100
+    Ymax: 100
+    Zmax: 100
+    Yawmax: 100
+
+  NodeName: drone
