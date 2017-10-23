@@ -6,11 +6,17 @@ robot:
     Name: robotMotors
     maxW: 0.7
     maxV: 4
-  
+
   Laser:
     Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
     Proxy: "Laser:tcp -h localhost -p 9001"
     Topic: "/scan"
     Name: robotLaser
+
+  Pose3D:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "Pose3D:default -h localhost -p 9001"
+    Topic: "/odom"
+    Name: robotPose3d
 
   NodeName: robot

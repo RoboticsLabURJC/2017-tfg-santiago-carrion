@@ -5,13 +5,10 @@ import time
 
 def execute(robot):
     try:
-        while True:
-            laser_data = (robot.get_laser_distance())
-            if ((laser_data) < 1.5):
-                robot.turn("left")
-            else:
-                robot.move("forward")
-            
-        
+        robot.move_meters("forward", 1)
+        robot.turn("left")
+        robot.move_meters("back", 2)
+        robot.turn("right", 1)
+        robot.move_meters("forward", 3)
     except KeyboardInterrupt:
         raise

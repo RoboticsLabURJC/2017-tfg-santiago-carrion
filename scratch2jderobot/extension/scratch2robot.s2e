@@ -11,6 +11,7 @@
                 ["", "take off drone", "drone/takeoff"],
                 ["", "land drone", "drone/land"],
                 ["r", "frontal laser distance", "laser/frontal"],
+                ["", "move robot %m.robotDirections meters %n", "robot/move/meters", "forward", 1],
         ],
         "menus": {
                 "robotDirections": ["forward", "back"],

@@ -40,6 +40,7 @@ ROBOTICS = [
     ['take off drone', 'robot.take_off()'],
     ['land drone', 'robot.land()'],
     ['frontal laser distance', 'robot.get_laser_distance()'],
+    ['move robot {} meters {}', 'robot.move_meters("%s", %s)'],
 ]
 
 
@@ -63,7 +64,7 @@ def similar(a, b):
 
     @param a: First sentence.
     @param b: Second sentence.
-    @return: The ratio of the similarity. 
+    @return: The ratio of the similarity.
     """
 
     return SequenceMatcher(None, a, b).ratio()

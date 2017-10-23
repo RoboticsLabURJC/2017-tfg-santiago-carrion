@@ -13,9 +13,10 @@ __status__ = "Development"
 
 import comm
 import time
+import math
 
 from jderobotTypes import CMDVel
-
+from jderobotTypes import Pose3d
 
 class Robot():
 
@@ -27,23 +28,24 @@ class Robot():
         """
         Init method.
 
-        @param jdrc: 
+        @param jdrc:
         """
 
         # variables
 
         self.__vel = CMDVel()
+        self.__pose3d = Pose3d()
 
         # get clients
         self.__motors_client = jdrc.getMotorsClient("robot.Motors")
         self.__laser_client = jdrc.getLaserClient("robot.Laser")
-
+        self.__pose3d_client = jdrc.getPose3dClient("robot.Pose3D")
 
     def __publish(self, vel):
         """
         .
 
-        @param vel: 
+        @param vel:
         """
 
         self.__motors_client.sendVelocities(vel)
@@ -61,6 +63,58 @@ class Robot():
         self.__vel.ax = 0.0
         self.__vel.ay = 0.0
         self.__vel.az = 0.0
+
+
+    def get_distance_traveled(self, initialPose3d):
+        """
+        Set the straight movement of the robot.
+
+        @param initialPose3d: place from which we calculate the distance
+
+        @return: the distance traveled
+        """
+        actualPose3d = self.__pose3d_client.getPose3d()
+
+        distance = math.hypot(actualPose3d.x - initialPose3d.x, actualPose3d.y - initialPose3d.y)
+
+        return abs(distance)
+
+    def move_meters(self,direction, meters=None):
+        """
+        Set the straight movement of the robot.
+
+        @param direction: direction of the move. Options: forward (default), back.
+        @param vel: a number with the distance in m. Default: 1 m.
+        """
+        # reset values
+        self.__reset()
+
+        # get initial pose3d
+        initialPose3d = self.__pose3d_client.getPose3d()
+
+        # set default velocity (m/s)
+        self.__vel.vx = 0.2
+
+        # set different direction
+        if direction == "back":
+            self.__vel.vx = -self.__vel.vx
+
+        # publish movement
+        self.__publish(self.__vel)
+
+        # compare initial pose3d with actual pose3d
+        while True:
+
+            # get distance traveled
+            distance = self.get_distance_traveled(initialPose3d)
+            if distance >= meters:
+                break;
+
+        # reset values
+        self.__reset()
+
+        # publish movement
+        self.__publish(self.__vel)
 
     def get_laser_distance(self):
         """
