@@ -41,6 +41,8 @@ ROBOTICS = [
     ['land drone', 'robot.land()'],
     ['frontal laser distance', 'robot.get_laser_distance()'],
     ['move robot {} meters {}', 'robot.move_meters("%s", %s)'],
+    ['get {} of {} object', 'robot.detect_object("%s", "%s")'],
+
 ]
 
 

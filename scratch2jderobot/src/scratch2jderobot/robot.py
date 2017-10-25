@@ -14,6 +14,7 @@ __status__ = "Development"
 import comm
 import time
 import math
+import cv2
 
 from jderobotTypes import CMDVel
 from jderobotTypes import Pose3d
@@ -40,6 +41,7 @@ class Robot():
         self.__motors_client = jdrc.getMotorsClient("robot.Motors")
         self.__laser_client = jdrc.getLaserClient("robot.Laser")
         self.__pose3d_client = jdrc.getPose3dClient("robot.Pose3D")
+        self.__camera_client = jdrc.getCameraClient("robot.Camera1")
 
     def __publish(self, vel):
         """
@@ -65,7 +67,61 @@ class Robot():
         self.__vel.az = 0.0
 
 
-    def get_distance_traveled(self, initialPose3d):
+    def detect_object(self, position, color):
+        """
+        Detect an object using the camera.
+
+        @param
+
+        @return: True if there is an object detect and its size in pixels
+        """
+        # define the lower and upper boundaries of the basic colors
+        GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
+        RED_RANGE = ((139, 0, 0), (255, 160, 122))
+        BLUE_RANGE = ((0, 128, 128), (65, 105, 225))
+
+        # initialize the values in case there is not object
+        x_position = 0
+        y_position = 0
+        size = 0
+
+        # chose the color to find
+        if color == "red":
+            color_range = RED_RANGE
+        if color == "green":
+            color_range = GREEN_RANGE
+        if color == "blue":
+            color_range = BLUE_RANGE
+
+        # get images from camera
+        image = self.__camera_client.getImage()
+
+        # apply color filters to the image
+        blur = cv2.GaussianBlur(image,(5,5), 2, 2)
+        hsv = cv2.cvtColor(blur, cv2.COLOR_RGB2HSV)
+        filtered_image = cv2.inRange(hsv, color_range[0], color_range[1])
+
+        # Apply threshold to the masked image
+        ret,thresh = cv2.threshold(filtered_image,127,255,0)
+        im,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+        # Find the index of the largest contour
+        for c in contours:
+            if c.any != 0:
+                cnt=contours[0]
+                x,y,w,h = cv2.boundingRect(cnt)
+                x_position = (w/2)+x
+                y_position = (h/2)+y
+                size = w*h
+
+        if position == "x position":
+            return x_position
+        if position == "y position":
+            return y_position
+        else:
+            return size
+
+    def __get_distance_traveled(self, initialPose3d):
         """
         Set the straight movement of the robot.
 
@@ -106,7 +162,7 @@ class Robot():
         while True:
 
             # get distance traveled
-            distance = self.get_distance_traveled(initialPose3d)
+            distance = self.__get_distance_traveled(initialPose3d)
             if distance >= meters:
                 break;
 
