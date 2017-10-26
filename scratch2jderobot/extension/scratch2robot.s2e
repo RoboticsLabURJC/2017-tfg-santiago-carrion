@@ -12,7 +12,10 @@
                 ["", "land drone", "drone/land"],
                 ["r", "frontal laser distance", "laser/frontal"],
                 ["", "move robot %m.robotDirections meters %n", "robot/move/meters", "forward", 1],
-                ["r", "get %m.position of %m.color object", "camera/detect","x position", "red"],
+                ["r", "size of object", "camera/size"],
+                ["r", "x position of object", "camera/x_pos"],
+                ["r", "y position of object", "camera/y_pos"],
+
         ],
         "menus": {
                 "position": ["x position", "y position", "size"],
