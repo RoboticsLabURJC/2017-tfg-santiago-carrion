@@ -28,10 +28,11 @@ if __name__ == '__main__':
     # loading the ICE and ROS parameters
     cfg = config.load(open_path + filename)
 
-    ic = comm.init(cfg,'drone')
+    #starting comm
+    jdrc = comm.init(cfg,'drone')
 
     # creating the object
-    robot = Drone(ic)
+    robot = Drone(jdrc)
 
     # executing the scratch program
     scratch.execute(robot)

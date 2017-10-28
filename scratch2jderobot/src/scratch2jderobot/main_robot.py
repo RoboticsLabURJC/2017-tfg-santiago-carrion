@@ -30,7 +30,7 @@ if __name__ == '__main__':
     cfg = config.load(open_path + filename)
 
     #starting comm
-    jdrc= comm.init(cfg, 'robot')
+    jdrc = comm.init(cfg, 'robot')
 
     # creating the object
     robot = Robot(jdrc)

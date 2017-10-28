@@ -5,13 +5,17 @@ import time
 
 def execute(robot):
     try:
-        while True:
-            size = (robot.get_size_object())
-            if ((size) > 20):
-                robot.stop()
-            else:
-                robot.move("forward", 1)
-            
-        
+        robot.take_off()
+        time.sleep(1)
+        robot.turn("left")
+        time.sleep(3)
+        robot.stop()
+        time.sleep(1)
+        robot.turn("right")
+        time.sleep(3)
+        robot.stop()
+        time.sleep(1)
+        robot.land()
+        time.sleep(1)
     except KeyboardInterrupt:
         raise

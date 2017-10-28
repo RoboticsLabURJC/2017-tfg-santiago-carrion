@@ -15,12 +15,11 @@ import math
 import time
 import imutils
 import cv2
+import comm
 
-from parallelIce.cameraClient import CameraClient
-from parallelIce.cmdvel import CMDVel
-from parallelIce.extra import Extra
-from parallelIce.navDataClient import NavDataClient
-from parallelIce.pose3dClient import Pose3DClient
+from jderobotTypes import CMDVel
+from jderobotTypes import Pose3d
+from jderobotTypes import Image
 
 # define the lower and upper boundaries of the basic colors
 GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
@@ -34,28 +33,29 @@ class Drone():
     Drone class.
     """
 
-    def __init__(self, ic, node=None):
+    def __init__(self, jdrc):
         """
         Init method.
-
-        @param ic: The ICE controller.
-        @param node: The ROS node controller.
+        @param jdrc:
         """
 
-        self.camera = CameraClient(ic, "drone.Camera", True)
-        self.cmdvel = CMDVel(ic, "drone.CMDVel")
-        self.extra = Extra(ic, "drone.Extra")
-        self.navdata = NavDataClient(ic, "drone.Navdata", True)
-        self.pose = Pose3DClient(ic, "drone.Pose3D", True)
+    	#variables
+
+    	#get clients
+        self.__pose3d_client = jdrc.getPose3dClient("drone.Pose3D")
+        self.__camera_client = jdrc.getCameraClient("drone.Camera1")
+        self.__cmdvel_client = jdrc.getCMDVelClient("drone.CMDVel")
+        self.__extra_client = jdrc.getArDroneExtraClient("drone.Extra")
+        self.__navdata_client = jdrc.getNavdataClient("drone.Navdata")
 
     def close(self):
         """
         Close communications with servers.
         """
 
-        self.camera.stop()
-        self.navdata.stop()
-        self.pose.stop()
+        self.__camera_client.stop()
+        self.__navdata_client.stop()
+        self.__pose3d_client.stop()
 
     def color_object_centroid(self):
         """
@@ -68,7 +68,7 @@ class Drone():
         color = BLUE_RANGE
 
         # get image from camera
-        frame = self.camera.getImage()
+        frame = self.__camera_client.getImage()
 
         # resize the frame
         frame = imutils.resize(frame, width=600)
@@ -128,10 +128,10 @@ class Drone():
             vz = -vz
 
         # assign velocity
-        self.cmdvel.setVZ(vz)
+        self.__cmdvel_client.setVZ(vz)
 
         # publish movement
-        self.cmdvel.sendVelocities()
+        self.__cmdvel_client.sendVelocities()
 
     def move(self, direction):
         """
@@ -155,11 +155,11 @@ class Drone():
             vx = 0.0
 
         # assign velocities
-        self.cmdvel.setVX(vx)
-        self.cmdvel.setVY(vy)
+        self.__cmdvel_client.setVX(vx)
+        self.__cmdvel_client.setVY(vy)
 
         # publish movement
-        self.cmdvel.sendVelocities()
+        self.__cmdvel_client.sendVelocities()
 
     def turn(self, direction):
         """
@@ -175,29 +175,29 @@ class Drone():
             yaw = -yaw
 
         # assign velocity
-        self.cmdvel.setYaw(yaw)
+        self.__cmdvel_client.setYaw(yaw)
 
         # publish movement
-        self.cmdvel.sendVelocities()
+        self.__cmdvel_client.sendVelocities()
 
     def stop(self):
         """
         Set all velocities to zero.
         """
 
-        self.cmdvel.setVX(0)
-        self.cmdvel.setVY(0)
-        self.cmdvel.setVZ(0)
-        self.cmdvel.setYaw(0)
+        self.__cmdvel_client.setVX(0)
+        self.__cmdvel_client.setVY(0)
+        self.__cmdvel_client.setVZ(0)
+        self.__cmdvel_client.setYaw(0)
 
-        self.cmdvel.sendVelocities()
+        self.__cmdvel_client.sendVelocities()
 
     def take_off(self):
         """
         Send the take off command.
         """
 
-        self.extra.takeoff()
+        self.__extra_client.takeoff()
         time.sleep(1)
 
     def land(self):
@@ -205,5 +205,5 @@ class Drone():
         Send the land command.
         """
 
-        self.extra.land()
+        self.__extra_client.land()
         time.sleep(1)
