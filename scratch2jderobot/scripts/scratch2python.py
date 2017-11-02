@@ -44,6 +44,13 @@ ROBOTICS = [
     ['size of object', 'robot.get_size_object()'],
     ['x position of object', 'robot.get_x_position()'],
     ['y position of object', 'robot.get_y_position()'],
+    ['drone size object', 'robot.get_size_object()'],
+    ['drone x centro object', 'robot.get_x_position()'],
+    ['drone y centro object', 'robot.get_y_position()'],
+    ['Pose3D x', 'robot.get_pose3d_x()'],
+    ['Pose3D y', 'robot.get_pose3d_y()'],
+    ['Pose3D z', 'robot.get_pose3d_z()'],
+
 
 ]
 

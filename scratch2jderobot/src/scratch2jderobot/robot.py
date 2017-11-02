@@ -137,7 +137,7 @@ class Robot():
         size = self.__detect_object("size", "red")
         return size
 
-    def get_x_postion(self):
+    def get_x_position(self):
 
         x_position = self.__detect_object("x position", "red")
         return x_position
@@ -198,6 +198,20 @@ class Robot():
 
         # publish movement
         self.__publish(self.__vel)
+
+    def get_pose3d_x(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        print pose3D
+        print pose3D.x
+        return pose3D.x
+
+    def get_pose3d_y(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        return pose3D.y
+    
+    def get_pose3d_z(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        return pose3D.z
 
     def get_laser_distance(self):
         """

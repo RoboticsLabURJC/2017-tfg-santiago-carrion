@@ -27,4 +27,10 @@ extras += [
     ['r', 'size of object', 'Scratch2JdeRobot/camera/size'],
     ['r', 'x position of object', 'Scratch2JdeRobot/camera/x_pos'],
     ['r', 'y position of object', 'Scratch2JdeRobot/camera/y_pos'],
+    ['r', 'drone size object', 'Scratch2JdeRobot/camera/size'],
+    ['r', 'drone x centro object', 'Scratch2JdeRobot/camera/x_pos'],
+    ['r', 'drone y centro object', 'Scratch2JdeRobot/camera/y_pos'],
+    ['r', 'Pose3D x', 'Scratch2JdeRobot/camera/pose3D/x'],
+    ['r', 'Pose3D y', 'Scratch2JdeRobot/camera/pose3D/y'],
+    ['r', 'Pose3D z', 'Scratch2JdeRobot/camera/pose3D/z'],
 ]

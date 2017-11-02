@@ -16,6 +16,7 @@ import time
 import imutils
 import cv2
 import comm
+import numpy as np
 
 from jderobotTypes import CMDVel
 from jderobotTypes import Pose3d
@@ -57,62 +58,97 @@ class Drone():
         self.__navdata_client.stop()
         self.__pose3d_client.stop()
 
-    def color_object_centroid(self):
+    def get_pose3d_x(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        print pose3D
+        return pose3D.x
+
+    def get_pose3d_y(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        return pose3D.y
+
+    def get_pose3d_z(self):
+        pose3D = self.__pose3d_client.getPose3d()
+        return pose3D.z
+
+    def __detect_object(self, position, color):
         """
-        Return the x,y centroid of a colorful object in the camera.
+        Detect an object using the camera.
 
-        @return: The (x,y) centroid of the object or None if not found.
+        @param
+
+        @return: True if there is an object detect and its size in pixels
         """
+        # define the lower and upper boundaries of the basic colors
+        GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
+        RED_RANGE = ((139, 0, 0), (255, 160, 122))
+        BLUE_RANGE = ((0, 128, 128), (65, 105, 225))
 
-        # FIXME: set color (manual)
-        color = BLUE_RANGE
+        # initialize the values in case there is no object
+        x_position = 0
+        y_position = 0
+        size = 0
 
-        # get image from camera
-        frame = self.__camera_client.getImage()
+        # chose the color to find
+        if color == "red":
+            color_range = RED_RANGE
+        if color == "green":
+            color_range = GREEN_RANGE
+        if color == "blue":
+            color_range = BLUE_RANGE
 
-        # resize the frame
-        frame = imutils.resize(frame, width=600)
+        # get image type from camera
+        image = self.__camera_client.getImage()
 
-        # convert to the HSV color space
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        # apply color filters to the image
+        filtered_image = cv2.inRange(image.data, color_range[0], color_range[1])
+        rgb = cv2.cvtColor(image.data, cv2.COLOR_BGR2RGB)
 
-        # construct a mask for the color specified
-        # then perform a series of dilations and erosions
-        # to remove any small blobs left in the mask
-        mask = cv2.inRange(hsv, color[0], color[1])
-        mask = cv2.erode(mask, None, iterations=2)
-        mask = cv2.dilate(mask, None, iterations=2)
 
-        # find contours in the mask and
-        # initialize the current center
-        cnts = cv2.findContours(
-            mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
-        center = None
-
-        # only proceed if at least one contour was found
-        if len(cnts) > 0:
-            # find the largest contour in the mask, then use
-            # it to compute the minimum enclosing circle and
-            # centroid
-            c = max(cnts, key=cv2.contourArea)
-            ((x, y), radius) = cv2.minEnclosingCircle(c)
-            M = cv2.moments(c)
-            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-
-            # only proceed if the radius meets a minimum size
-            if radius > 10:
-                # draw the circle border
-                cv2.circle(
-                    frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
-
-                # and the centroid
-                cv2.circle(frame, center, 5, (0, 0, 255), -1)
+        # Apply threshold to the masked image
+        ret,thresh = cv2.threshold(filtered_image,127,255,0)
+        im,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+        # Find the index of the largest contour
+        for c in contours:
+            if c.any != 0:
+                areas = [cv2.contourArea(c) for c in contours]
+                max_index = np.argmax(areas)
+                cnt=contours[max_index]
+                if max(areas) > 0.0:
+                    x,y,w,h = cv2.boundingRect(cnt)
+                    cv2.rectangle(rgb,(x,y),(x+w,y+h),(0,255,0),2)
+                    x_position = (w/2)+x
+                    y_position = (h/2)+y
+                    size = w*h
 
         # show the frame to our screen
-        cv2.imshow("Frame", frame)
+        cv2.imshow("Frame", rgb)
         key = cv2.waitKey(1) & 0xFF
 
-        return center
+        print x_position, y_position, size
+
+        if position == "x position":
+            return x_position
+        if position == "y position":
+            return y_position
+        else:
+            return size
+
+    def get_size_object(self):
+
+        size = self.__detect_object("size", "red")
+        return size
+
+    def get_x_position(self):
+
+        x_position = self.__detect_object("x position", "red")
+        return x_position
+
+    def get_y_position(self):
+
+        y_position = self.__detect_object("y position", "red")
+        return y_position
+
 
     def go_up_down(self, direction):
         """
@@ -141,8 +177,10 @@ class Drone():
         """
 
         # set default velocities (m/s)
-        vx = 5.0
+        vx = 3.0
         vy = 0.0
+        vz = 1.0
+
 
         # set different direction
         if direction == "back":
@@ -150,14 +188,21 @@ class Drone():
         elif direction == "left":
             vy = float(vx)
             vx = 0.0
+            vz = 0.0
         elif direction == "right":
             vy = float(-vx)
+            vx = 0.0
+            vz = 0.0
+        elif direction == "down":
+            vz = -vz
+            vx = 0.0
+        elif direction == "up":
             vx = 0.0
 
         # assign velocities
         self.__cmdvel_client.setVX(vx)
         self.__cmdvel_client.setVY(vy)
-
+        self.__cmdvel_client.setVZ(vz)
         # publish movement
         self.__cmdvel_client.sendVelocities()
 

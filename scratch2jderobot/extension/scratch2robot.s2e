@@ -15,13 +15,19 @@
                 ["r", "size of object", "camera/size"],
                 ["r", "x position of object", "camera/x_pos"],
                 ["r", "y position of object", "camera/y_pos"],
+                ["r", "drone size object", "camera/size"],
+                ["r", "drone pos x centro object", "camera/x_pos"],
+                ["r", "drone pos y centro object", "camera/y_pos"],
+                ["r", "Pose3D x", "camera/pose3D/x"],
+                ["r", "Pose3D y", "camera/pose3D/y"],
+                ["r", "Pose3D z", "camera/pose3D/z"],
 
         ],
         "menus": {
                 "position": ["x position", "y position", "size"],
                 "color": ["red", "blue", "green"],
                 "robotDirections": ["forward", "back"],
-                "droneDirections": ["forward", "back", "left", "right"],
+                "droneDirections": ["forward", "back", "left", "right", "up", "down"],
                 "turnDirections": ["left", "right"]
         }
 }
