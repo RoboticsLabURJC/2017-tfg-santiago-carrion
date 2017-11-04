@@ -14,6 +14,7 @@ extras = []
 # robotics:ScratchExtension
 extras += [
     # add extensions code if not auto-generated
+    # movement blocks
     [' ', 'stop robot-drone', 'Scratch2JdeRobot/stop'],
     [' ', 'move robot %m.robotDirections', 'Scratch2JdeRobot/robot/move', 'forward'],
     [' ', 'move drone %m.direction speed %n', 'Scratch2JdeRobot/robot/move/speed', 'forward', 1],
@@ -23,8 +24,7 @@ extras += [
     [' ', 'take off drone', 'Scratch2JdeRobot/drone/takeoff'],
     [' ', 'land drone', 'Scratch2JdeRobot/drone/land'],
     [' ', 'move robot %m.robotDirections meters %n', 'Scratch2JdeRobot/robot/move/meters', 'forward', 1],
-
-    #perceptive blocks
+    # perceptive blocks
     ['r', 'frontal laser distance', 'Scratch2JdeRobot/laser/frontal'],
     ['r', 'size of object', 'Scratch2JdeRobot/camera/size'],
     ['r', 'x position of object', 'Scratch2JdeRobot/camera/x_pos'],
