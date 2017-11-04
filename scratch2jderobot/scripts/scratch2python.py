@@ -31,16 +31,20 @@ GENERAL = [
 ]
 
 ROBOTICS = [
+
+    # movement blocks
     ['move robot {}', 'robot.move("%s")'],
-    ['move drone {}', 'robot.move("%s")'],
+    ['move drone {} speed {}', 'robot.move("%s", %s)'],
     ['move robot {} speed {}', 'robot.move("%s", %s)'],
     ['stop robot-drone', 'robot.stop()'],
-    ['turn robot-drone {}', 'robot.turn("%s")'],
+    ['turn drone {} speed {}', 'robot.turn("%s", %s)'],
     ['turn robot {} speed {}', 'robot.turn("%s", %s)'],
     ['take off drone', 'robot.take_off()'],
     ['land drone', 'robot.land()'],
-    ['frontal laser distance', 'robot.get_laser_distance()'],
     ['move robot {} meters {}', 'robot.move_meters("%s", %s)'],
+
+    #perceptive blocks
+    ['frontal laser distance', 'robot.get_laser_distance()'],
     ['size of object', 'robot.get_size_object()'],
     ['x position of object', 'robot.get_x_position()'],
     ['y position of object', 'robot.get_y_position()'],

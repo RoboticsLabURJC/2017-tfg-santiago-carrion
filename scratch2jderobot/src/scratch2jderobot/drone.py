@@ -75,9 +75,10 @@ class Drone():
         """
         Detect an object using the camera.
 
-        @param
+        @param position: data to return
+        @param color: color to detect
 
-        @return: True if there is an object detect and its size in pixels
+        @return: size and center of the object detected in the frame
         """
         # define the lower and upper boundaries of the basic colors
         GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
@@ -104,10 +105,10 @@ class Drone():
         filtered_image = cv2.inRange(image.data, color_range[0], color_range[1])
         rgb = cv2.cvtColor(image.data, cv2.COLOR_BGR2RGB)
 
-
         # Apply threshold to the masked image
         ret,thresh = cv2.threshold(filtered_image,127,255,0)
         im,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
         # Find the index of the largest contour
         for c in contours:
             if c.any != 0:
@@ -124,8 +125,8 @@ class Drone():
         # show the frame to our screen
         cv2.imshow("Frame", rgb)
         key = cv2.waitKey(1) & 0xFF
-
-        print x_position, y_position, size
+        if size > 0:
+            print x_position, y_position, size
 
         if position == "x position":
             return x_position
@@ -158,7 +159,7 @@ class Drone():
         """
 
         # set default velocity (m/s)
-        vz = 1.0
+        vz = 2.0
 
         if direction == "down":
             vz = -vz
@@ -169,52 +170,79 @@ class Drone():
         # publish movement
         self.__cmdvel_client.sendVelocities()
 
-    def move(self, direction):
+    # def move.old(self, direction):
+    #     """
+    #     Set the horizontal movement of the drone.
+    #
+    #     @param direction: direction of the move. Options: forward (default), back.
+    #     """
+    #
+    #     # set default velocities (m/s)
+    #     vx = 3.0
+    #     vy = 0.0
+    #     vz = 0.0
+    #     # set different direction
+    #     if direction == "back":
+    #         vx = -vx
+    #     elif direction == "left":
+    #         vy = float(vx)
+    #         vx = 0.0
+    #     elif direction == "right":
+    #         vy = float(-vx)
+    #         vx = 0.0
+    #     elif direction == "down":
+    #         vz = -0.5
+    #         vx = 0.0
+    #     elif direction == "up":
+    #         vz = 0.5
+    #         vx = 0.0
+    #
+    #     print direction
+    #
+    #     # assign velocities
+    #     self.__cmdvel_client.setVX(vx)
+    #     self.__cmdvel_client.setVY(vy)
+    #     self.__cmdvel_client.setVZ(vz)
+    #     # publish movement
+    #     self.__cmdvel_client.sendVelocities()
+
+    def move(self, direction, vel):
         """
         Set the horizontal movement of the drone.
 
         @param direction: direction of the move. Options: forward (default), back.
+        @param vel: a number with the velocity in m/s. Default: 1 m/s.
         """
-
-        # set default velocities (m/s)
-        vx = 3.0
-        vy = 0.0
-        vz = 1.0
-
 
         # set different direction
         if direction == "back":
-            vx = -vx
+            self.__cmdvel_client.setVX(-vel)
+        elif direction == "forward":
+            self.__cmdvel_client.setVX(vel)
         elif direction == "left":
-            vy = float(vx)
-            vx = 0.0
-            vz = 0.0
+            self.__cmdvel_client.setVY(vel)
         elif direction == "right":
-            vy = float(-vx)
-            vx = 0.0
-            vz = 0.0
+            self.__cmdvel_client.setVY(-vel)
         elif direction == "down":
-            vz = -vz
-            vx = 0.0
+            self.__cmdvel_client.setVZ(-vel)
         elif direction == "up":
-            vx = 0.0
+            self.__cmdvel_client.setVZ(vel)
 
-        # assign velocities
-        self.__cmdvel_client.setVX(vx)
-        self.__cmdvel_client.setVY(vy)
-        self.__cmdvel_client.setVZ(vz)
+        print direction
+
         # publish movement
         self.__cmdvel_client.sendVelocities()
 
-    def turn(self, direction):
+    def turn(self, direction, vel):
         """
         Set the angular velocity.
 
         @param direction: direction of the move. Options: left (default), right.
+        @param vel: a number with the velocity in m/s. Default: 1 m/s.
         """
 
         # set default velocity (m/s)
-        yaw = 5.0 * math.pi
+        yaw = vel * math.pi
 
         if direction == "right":
             yaw = -yaw

@@ -73,9 +73,10 @@ class Robot():
         """
         Detect an object using the camera.
 
-        @param
+        @param position: data to return
+        @param color: color to detect
 
-        @return: True if there is an object detect and its size in pixels
+        @return: size and center of the object detected in the frame
         """
         # define the lower and upper boundaries of the basic colors
         GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
@@ -200,16 +201,29 @@ class Robot():
         self.__publish(self.__vel)
 
     def get_pose3d_x(self):
+        """
+        Get the value of his 3d position.
+
+        @return: return his position on the x axis.
+        """
         pose3D = self.__pose3d_client.getPose3d()
-        print pose3D
-        print pose3D.x
         return pose3D.x
 
     def get_pose3d_y(self):
+        """
+        Get the value of his 3d position.
+
+        @return: return his position on the y axis.
+        """
         pose3D = self.__pose3d_client.getPose3d()
         return pose3D.y
-    
+
     def get_pose3d_z(self):
+        """
+        Get the value of his 3d position.
+
+        @return: return his position on the z axis.
+        """
         pose3D = self.__pose3d_client.getPose3d()
         return pose3D.z
 
