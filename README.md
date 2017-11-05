@@ -3,15 +3,15 @@
 
 Tool that allows to program robots easily using Scratch 2.0. Performs the translation of the Scratch blocks to Python code for use on robots.
 
-### Prerequisites
+## Prerequisites
 
 Operating system Ubuntu 16.04
 Scratch 2.0
 
-### Installation
+## Installation
 
 
-### API Reference
+## API Reference
 * **Perceptive Blocks**
 
 | Name        | Robot     | Param     | Return     | Description|
@@ -40,7 +40,5 @@ Scratch 2.0
 | robot turn {direction} speed {velocity} | Kobuki  | direction: left, right / velocity: integer |    --  |  Gives a turning speed in the indicated direction|
 | robot move {direction} meters {meters} | Kobuki  | direction: left, right, forward, back / meters: integer |    --  |  Move robot the indicated meters in one direction|
 
-##### Movement Blocks
 
-
-### Tests
+## Tests
