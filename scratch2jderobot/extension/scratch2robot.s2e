@@ -12,22 +12,15 @@
                 ["", "land drone", "drone/land"],
                 ["", "move robot %m.robotDirections meters %n", "robot/move/meters", "forward", 1],
                 ["r", "frontal laser distance", "laser/frontal"],
-                ["r", "size of object", "camera/size"],
-                ["r", "x position of object", "camera/x_pos"],
-                ["r", "y position of object", "camera/y_pos"],
-                ["r", "drone size object", "camera/size"],
-                ["r", "drone pos x centro object", "camera/x_pos"],
-                ["r", "drone pos y centro object", "camera/y_pos"],
-                ["r", "Pose3D x", "camera/pose3D/x"],
-                ["r", "Pose3D y", "camera/pose3D/y"],
-                ["r", "Pose3D z", "camera/pose3D/z"],
-
+                ["r", "get %m.position of object %m.color","camera/position","x_position","red"],
+                ["r", "get pose3d %m.pose3d","robot/pose3d","x"],
         ],
         "menus": {
-                "position": ["x position", "y position", "size"],
+                "position": ["x_position", "y_position", "size"],
                 "color": ["red", "blue", "green"],
+                "pose3d": ["x","y","z"],
                 "robotDirections": ["forward", "back"],
                 "droneDirections": ["forward", "back", "left", "right", "up", "down"],
-                "turnDirections": ["left", "right"]
+                "turnDirections": ["left", "right"],
         }
 }

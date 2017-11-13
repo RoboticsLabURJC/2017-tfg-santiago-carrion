@@ -42,20 +42,9 @@ ROBOTICS = [
     ['take off drone', 'robot.take_off()'],
     ['land drone', 'robot.land()'],
     ['move robot {} meters {}', 'robot.move_meters("%s", %s)'],
-
-    #perceptive blocks
     ['frontal laser distance', 'robot.get_laser_distance()'],
-    ['size of object', 'robot.get_size_object()'],
-    ['x position of object', 'robot.get_x_position()'],
-    ['y position of object', 'robot.get_y_position()'],
-    ['drone size object', 'robot.get_size_object()'],
-    ['drone x centro object', 'robot.get_x_position()'],
-    ['drone y centro object', 'robot.get_y_position()'],
-    ['Pose3D x', 'robot.get_pose3d_x()'],
-    ['Pose3D y', 'robot.get_pose3d_y()'],
-    ['Pose3D z', 'robot.get_pose3d_z()'],
-
-
+    ['get {} of object {}', 'robot.get_object("%s","%s")'],
+    ['get pose3d {}', 'robot.get_pose3d("%s")'],
 ]
 
 
@@ -82,6 +71,7 @@ def similar(a, b):
     @return: The ratio of the similarity.
     """
 
+    print ">>> ratio of similarity betwen:",a,"--and--",b,"-->",SequenceMatcher(None, a, b).ratio()
     return SequenceMatcher(None, a, b).ratio()
 
 
@@ -104,6 +94,7 @@ def sentence_mapping(sentence, threshold=None):
             options.append(elem)
             found = True
 
+
     # then look for robotics blocks
     for elem in ROBOTICS:
         if elem[0][:3] == sentence.replace('    ', '').replace('(', '')[:3]:
@@ -114,25 +105,35 @@ def sentence_mapping(sentence, threshold=None):
         # select the option that better fits
         l = [(m[0], m[1], similar(sentence, m[0])) for m in options]
         original, translation, score = max(l, key=lambda item: item[2])
+        print ">>> original, translation, score:", original, translation, score
         if threshold and score < threshold:
             return None, None
 
+
         # extract arguments
         p = compile(original)
+        print ">>> compile:", original, "--return--",p, sentence   #compile bien
 
         args = p.parse(sentence.replace('    ', ''))
+        print ">>> p.parse(sentence) sentence:",sentence, args #no parsea
+
 
         if args:
             args_aux = list(args)
+            print ">>> args encontrados:",list(args)
 
             # look for more blocks
             for idx in range(len(args_aux)):
-                new_ori, new_trans = sentence_mapping(args_aux[idx], 0.8)
-
+                print ">>> looking for more blocks:",args_aux[idx]
+                new_ori, new_trans = sentence_mapping(args_aux[idx]) #sentence_mapping(args_aux[idx],0.8) --old
+                print ">>> new sentence_mapping of:",args_aux[idx],"--return--",new_ori, new_trans
                 if new_trans != None:
-                    args_aux[idx] = args_aux[idx].replace(new_ori, new_trans)
+                    print ">>> frase en la que reemplazar:",args_aux[idx]
+                    args_aux[idx] = args_aux[idx].replace(new_ori, new_trans) #replace(args_aux[idx], new_trans)
+                    print ">>> reemplazando:",new_ori,"--with--", new_trans
 
             translation = translation % tuple(args_aux)
+            print ">>> traduccion final:", translation, tuple(args_aux)
 
     return original, translation
 
@@ -184,9 +185,13 @@ except KeyboardInterrupt:\n\
             python_program += tab_seq * (num_tabs + 1)
 
             # pre-processing if there is a condition (operators and types)
+            print ">>>"
+            print ">>>"
+            print ">>>----------- Processing sentence:",s,"----------"
+            print ">>>"
+            print ">>"
             if is_conditional(s):
                 s = s.replace("'", "").replace("=", "==")
-
             # mapping
             original, translation = sentence_mapping(s)
 

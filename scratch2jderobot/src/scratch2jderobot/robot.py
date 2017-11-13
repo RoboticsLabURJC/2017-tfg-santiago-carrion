@@ -69,7 +69,7 @@ class Robot():
         self.__vel.az = 0.0
 
 
-    def __detect_object(self, position, color):
+    def get_object(self, position, color):
         """
         Detect an object using the camera.
 
@@ -126,27 +126,27 @@ class Robot():
 
         print x_position, y_position, size
 
-        if position == "x position":
+        if position == "x_position":
             return x_position
-        if position == "y position":
+        elif position == "y_position":
             return y_position
         else:
             return size
 
-    def get_size_object(self):
-
-        size = self.__detect_object("size", "red")
-        return size
-
-    def get_x_position(self):
-
-        x_position = self.__detect_object("x position", "red")
-        return x_position
-
-    def get_y_position(self):
-
-        y_position = self.__detect_object("y position", "red")
-        return y_position
+    # def get_size_object(self):
+    #
+    #     size = self.__detect_object("size", "red")
+    #     return size
+    #
+    # def get_x_position(self):
+    #
+    #     x_position = self.__detect_object("x position", "red")
+    #     return x_position
+    #
+    # def get_y_position(self):
+    #
+    #     y_position = self.__detect_object("y position", "red")
+    #     return y_position
 
 
     def __get_distance_traveled(self, initialPose3d):
@@ -200,32 +200,49 @@ class Robot():
         # publish movement
         self.__publish(self.__vel)
 
-    def get_pose3d_x(self):
+    def get_pose3d(self, pose):
         """
-        Get the value of his 3d position.
+        Get the value of odometry sensor.
 
-        @return: return his position on the x axis.
+        @return: return the value asked.
         """
         pose3D = self.__pose3d_client.getPose3d()
-        return pose3D.x
 
-    def get_pose3d_y(self):
-        """
-        Get the value of his 3d position.
+        if pose == "y":
+            val=pose3D.y
+        elif pose == "z":
+            val=pose3D.z
+        else:
+            val=pose3D.x
 
-        @return: return his position on the y axis.
-        """
-        pose3D = self.__pose3d_client.getPose3d()
-        return pose3D.y
+        return val
 
-    def get_pose3d_z(self):
-        """
-        Get the value of his 3d position.
-
-        @return: return his position on the z axis.
-        """
-        pose3D = self.__pose3d_client.getPose3d()
-        return pose3D.z
+    # def get_pose3d_x(self):
+    #     """
+    #     Get the value of his 3d position.
+    #
+    #     @return: return his position on the x axis.
+    #     """
+    #     pose3D = self.__pose3d_client.getPose3d()
+    #     return pose3D.x
+    #
+    # def get_pose3d_y(self):
+    #     """
+    #     Get the value of his 3d position.
+    #
+    #     @return: return his position on the y axis.
+    #     """
+    #     pose3D = self.__pose3d_client.getPose3d()
+    #     return pose3D.y
+    #
+    # def get_pose3d_z(self):
+    #     """
+    #     Get the value of his 3d position.
+    #
+    #     @return: return his position on the z axis.
+    #     """
+    #     pose3D = self.__pose3d_client.getPose3d()
+    #     return pose3D.z
 
     def get_laser_distance(self):
         """

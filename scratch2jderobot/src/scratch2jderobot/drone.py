@@ -58,20 +58,24 @@ class Drone():
         self.__navdata_client.stop()
         self.__pose3d_client.stop()
 
-    def get_pose3d_x(self):
-        pose3D = self.__pose3d_client.getPose3d()
-        print pose3D
-        return pose3D.x
+    def get_pose3d(self, pose):
+        """
+        Get the value of odometry sensor.
 
-    def get_pose3d_y(self):
+        @return: return the asked value.
+        """
         pose3D = self.__pose3d_client.getPose3d()
-        return pose3D.y
 
-    def get_pose3d_z(self):
-        pose3D = self.__pose3d_client.getPose3d()
-        return pose3D.z
+        if pose == "y":
+            val=pose3D.y
+        elif pose == "z":
+            val=pose3D.z
+        else:
+            val=pose3D.x
 
-    def __detect_object(self, position, color):
+        return val
+
+    def get_object(self, position, color):
         """
         Detect an object using the camera.
 
@@ -128,28 +132,12 @@ class Drone():
         if size > 0:
             print x_position, y_position, size
 
-        if position == "x position":
+        if position == "x_position":
             return x_position
-        if position == "y position":
+        if position == "y_position":
             return y_position
         else:
             return size
-
-    def get_size_object(self):
-
-        size = self.__detect_object("size", "red")
-        return size
-
-    def get_x_position(self):
-
-        x_position = self.__detect_object("x position", "red")
-        return x_position
-
-    def get_y_position(self):
-
-        y_position = self.__detect_object("y position", "red")
-        return y_position
-
 
     def go_up_down(self, direction):
         """
@@ -170,41 +158,6 @@ class Drone():
         # publish movement
         self.__cmdvel_client.sendVelocities()
 
-    # def move.old(self, direction):
-    #     """
-    #     Set the horizontal movement of the drone.
-    #
-    #     @param direction: direction of the move. Options: forward (default), back.
-    #     """
-    #
-    #     # set default velocities (m/s)
-    #     vx = 3.0
-    #     vy = 0.0
-    #     vz = 0.0
-    #     # set different direction
-    #     if direction == "back":
-    #         vx = -vx
-    #     elif direction == "left":
-    #         vy = float(vx)
-    #         vx = 0.0
-    #     elif direction == "right":
-    #         vy = float(-vx)
-    #         vx = 0.0
-    #     elif direction == "down":
-    #         vz = -0.5
-    #         vx = 0.0
-    #     elif direction == "up":
-    #         vz = 0.5
-    #         vx = 0.0
-    #
-    #     print direction
-    #
-    #     # assign velocities
-    #     self.__cmdvel_client.setVX(vx)
-    #     self.__cmdvel_client.setVY(vy)
-    #     self.__cmdvel_client.setVZ(vz)
-    #     # publish movement
-    #     self.__cmdvel_client.sendVelocities()
 
     def move(self, direction, vel):
         """

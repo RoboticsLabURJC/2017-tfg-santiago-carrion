@@ -7,10 +7,10 @@ def execute(robot):
     try:
         robot.take_off()
         while True:
-            size = (robot.get_size_object())
+            size = (robot.get_laser_distance())
             if ((size) > 0):
-                x = (robot.get_x_position())
-                y = (robot.get_y_position())
+                x = (get x_position of object red)
+                y = (get y_position of object red)
                 if ((x) >   165):
                     robot.turn("right", 2)
                 else:
@@ -27,8 +27,8 @@ def execute(robot):
                     robot.move("forward", 2)
                 
             else:
-                robot.stop()
                 robot.turn("left", 2)
+                robot.stop()
             
         
     except KeyboardInterrupt:

@@ -26,13 +26,6 @@ extras += [
     [' ', 'move robot %m.robotDirections meters %n', 'Scratch2JdeRobot/robot/move/meters', 'forward', 1],
     # perceptive blocks
     ['r', 'frontal laser distance', 'Scratch2JdeRobot/laser/frontal'],
-    ['r', 'size of object', 'Scratch2JdeRobot/camera/size'],
-    ['r', 'x position of object', 'Scratch2JdeRobot/camera/x_pos'],
-    ['r', 'y position of object', 'Scratch2JdeRobot/camera/y_pos'],
-    ['r', 'drone size object', 'Scratch2JdeRobot/camera/size'],
-    ['r', 'drone x centro object', 'Scratch2JdeRobot/camera/x_pos'],
-    ['r', 'drone y centro object', 'Scratch2JdeRobot/camera/y_pos'],
-    ['r', 'Pose3D x', 'Scratch2JdeRobot/camera/pose3D/x'],
-    ['r', 'Pose3D y', 'Scratch2JdeRobot/camera/pose3D/y'],
-    ['r', 'Pose3D z', 'Scratch2JdeRobot/camera/pose3D/z'],
+    ['r', 'get %m.position of object','Scratch2JdeRobot/camera/detection','x_position'],
+    ['r', 'get pose3d %m.pose3d','Scratch2JdeRobot/robot/pose3d','x'],
 ]
