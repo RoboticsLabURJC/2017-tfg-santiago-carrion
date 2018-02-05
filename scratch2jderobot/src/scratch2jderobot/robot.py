@@ -13,13 +13,9 @@ __status__ = "Development"
 
 import comm
 import time
-import math
-import cv2
-import numpy as np
 
 from jderobotTypes import CMDVel
-from jderobotTypes import Pose3d
-from jderobotTypes import Image
+
 
 class Robot():
 
@@ -37,13 +33,11 @@ class Robot():
         # variables
 
         self.__vel = CMDVel()
-        self.__pose3d = Pose3d()
 
         # get clients
         self.__motors_client = jdrc.getMotorsClient("robot.Motors")
         self.__laser_client = jdrc.getLaserClient("robot.Laser")
-        self.__pose3d_client = jdrc.getPose3dClient("robot.Pose3D")
-        self.__camera_client = jdrc.getCameraClient("robot.Camera1")
+
 
     def __publish(self, vel):
         """
@@ -68,8 +62,7 @@ class Robot():
         self.__vel.ay = 0.0
         self.__vel.az = 0.0
 
-
-    def get_object(self, position, color):
+    def detect_object(self, position, color):
         """
         Detect an object using the camera.
 
@@ -126,123 +119,27 @@ class Robot():
 
         print x_position, y_position, size
 
-        if position == "x_position":
+        if position == "x position":
             return x_position
-        elif position == "y_position":
+        if position == "y position":
             return y_position
         else:
             return size
 
-    # def get_size_object(self):
-    #
-    #     size = self.__detect_object("size", "red")
-    #     return size
-    #
-    # def get_x_position(self):
-    #
-    #     x_position = self.__detect_object("x position", "red")
-    #     return x_position
-    #
-    # def get_y_position(self):
-    #
-    #     y_position = self.__detect_object("y position", "red")
-    #     return y_position
+    def get_size_object(self):
 
+        size = self.detect_object("size", "red")
+        return size
 
-    def __get_distance_traveled(self, initialPose3d):
-        """
-        Set the straight movement of the robot.
+    def get_x_position(self):
 
-        @param initialPose3d: place from which we calculate the distance
+        x_position = self.detect_object("x position", "red")
+        return x_position
 
-        @return: the distance traveled
-        """
-        actualPose3d = self.__pose3d_client.getPose3d()
+    def get_y_position(self):
 
-        distance = math.hypot(actualPose3d.x - initialPose3d.x, actualPose3d.y - initialPose3d.y)
-
-        return abs(distance)
-
-    def move_meters(self,direction, meters=None):
-        """
-        Set the straight movement of the robot.
-
-        @param direction: direction of the move. Options: forward (default), back.
-        @param vel: a number with the distance in m. Default: 1 m.
-        """
-        # reset values
-        self.__reset()
-
-        # get initial pose3d
-        initialPose3d = self.__pose3d_client.getPose3d()
-
-        # set default velocity (m/s)
-        self.__vel.vx = 0.2
-
-        # set different direction
-        if direction == "back":
-            self.__vel.vx = -self.__vel.vx
-
-        # publish movement
-        self.__publish(self.__vel)
-
-        # compare initial pose3d with actual pose3d
-        while True:
-
-            # get distance traveled
-            distance = self.__get_distance_traveled(initialPose3d)
-            if distance >= meters:
-                break;
-
-        # reset values
-        self.__reset()
-
-        # publish movement
-        self.__publish(self.__vel)
-
-    def get_pose3d(self, pose):
-        """
-        Get the value of odometry sensor.
-
-        @return: return the value asked.
-        """
-        pose3D = self.__pose3d_client.getPose3d()
-
-        if pose == "y":
-            val=pose3D.y
-        elif pose == "z":
-            val=pose3D.z
-        else:
-            val=pose3D.x
-
-        return val
-
-    # def get_pose3d_x(self):
-    #     """
-    #     Get the value of his 3d position.
-    #
-    #     @return: return his position on the x axis.
-    #     """
-    #     pose3D = self.__pose3d_client.getPose3d()
-    #     return pose3D.x
-    #
-    # def get_pose3d_y(self):
-    #     """
-    #     Get the value of his 3d position.
-    #
-    #     @return: return his position on the y axis.
-    #     """
-    #     pose3D = self.__pose3d_client.getPose3d()
-    #     return pose3D.y
-    #
-    # def get_pose3d_z(self):
-    #     """
-    #     Get the value of his 3d position.
-    #
-    #     @return: return his position on the z axis.
-    #     """
-    #     pose3D = self.__pose3d_client.getPose3d()
-    #     return pose3D.z
+        y_position = self.detect_object("y position", "red")
+        return y_position
 
     def get_laser_distance(self):
         """

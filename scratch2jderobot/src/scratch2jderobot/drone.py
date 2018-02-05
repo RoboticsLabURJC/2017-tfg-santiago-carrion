@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__author__ = "Raul Perula-Martinez"
-__copyright__ = "JdeRobot project"
-__credits__ = ["Raul Perula-Martinez"]
-__license__ = "GPL v3"
-__version__ = "0.0.0"
-__maintainer__ = "Raul Perula-Martinez"
-__email__ = "raules@gmail.com"
-__status__ = "Development"
+import math
+import time
+import imutils
+import cv2
 
+from parallelIce.cameraClient import CameraClient
+from parallelIce.cmdvel import CMDVel
+from parallelIce.extra import Extra
+from parallelIce.navDataClient import NavDataClient
+from parallelIce.pose3dClient import Pose3DClient
+
+# define the lower and upper boundaries of the basic colors
+GREEN_RANGE = ((29, 86, 6), (64, 255, 255))
+RED_RANGE = ((139, 0, 0), (255, 160, 122))
+BLUE_RANGE = ((0, 128, 128), (65, 105, 225))
 
 import math
 import time
@@ -58,28 +64,11 @@ class Drone():
         self.__navdata_client.stop()
         self.__pose3d_client.stop()
 
-    def get_pose3d(self, pose):
-        """
-        Get the value of odometry sensor.
 
-        @return: return the asked value.
-        """
-        pose3D = self.__pose3d_client.getPose3d()
-
-        if pose == "y":
-            val=pose3D.y
-        elif pose == "z":
-            val=pose3D.z
-        else:
-            val=pose3D.x
-
-        return val
-
-    def get_object(self, position, color):
+    def detect_object(self, color):
         """
         Detect an object using the camera.
 
-        @param position: data to return
         @param color: color to detect
 
         @return: size and center of the object detected in the frame
@@ -109,10 +98,10 @@ class Drone():
         filtered_image = cv2.inRange(image.data, color_range[0], color_range[1])
         rgb = cv2.cvtColor(image.data, cv2.COLOR_BGR2RGB)
 
+
         # Apply threshold to the masked image
         ret,thresh = cv2.threshold(filtered_image,127,255,0)
         im,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-
         # Find the index of the largest contour
         for c in contours:
             if c.any != 0:
@@ -129,15 +118,30 @@ class Drone():
         # show the frame to our screen
         cv2.imshow("Frame", rgb)
         key = cv2.waitKey(1) & 0xFF
-        if size > 0:
-            print x_position, y_position, size
 
-        if position == "x_position":
-            return x_position
-        if position == "y_position":
-            return y_position
-        else:
-            return size
+        return size, x_position, y_position
+
+        # if position == "x position":
+        #     return x_position
+        # if position == "y position":
+        #     return y_position
+        # else:
+        #     return size
+
+    def get_size_object(self):
+
+        size, _, _ = self.detect_object("red")
+        return size
+
+    def get_x_position(self):
+
+        _, x_position, _ = self.detect_object("red")
+        return x_position
+
+    def get_y_position(self):
+
+        _, _, y_position = self.detect_object("red")
+        return y_position
 
     def go_up_down(self, direction):
         """
@@ -159,7 +163,7 @@ class Drone():
         self.__cmdvel_client.sendVelocities()
 
 
-    def move(self, direction, vel):
+    def move(self, direction, vel=None):
         """
         Set the horizontal movement of the drone.
 
@@ -167,6 +171,8 @@ class Drone():
         @param vel: a number with the velocity in m/s. Default: 1 m/s.
         """
 
+        if vel == None:
+            vel = 1
         # set different direction
         if direction == "back":
             self.__cmdvel_client.setVX(-vel)
@@ -180,20 +186,20 @@ class Drone():
             self.__cmdvel_client.setVZ(-vel)
         elif direction == "up":
             self.__cmdvel_client.setVZ(vel)
-
         print direction
 
         # publish movement
         self.__cmdvel_client.sendVelocities()
 
-    def turn(self, direction, vel):
+    def turn(self, direction, vel=None):
         """
         Set the angular velocity.
 
         @param direction: direction of the move. Options: left (default), right.
         @param vel: a number with the velocity in m/s. Default: 1 m/s.
         """
-
+        if vel == None:
+            vel = 0.5
         # set default velocity (m/s)
         yaw = vel * math.pi
 

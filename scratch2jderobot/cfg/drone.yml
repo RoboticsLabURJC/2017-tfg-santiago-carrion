@@ -28,15 +28,18 @@ drone:
 
   CMDVel:
     Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
-    Proxy: "CMDVel:default -h 0.0.0.0 -p 9000"
+    Proxy: "CMDVel:default -h localhost -p 9000"
+    Name: CMDVel
 
   Navdata:
     Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
-    Proxy: Navdata:default -h 0.0.0.0 -p 9000
+    Proxy: "Navdata:default -h localhost -p 9000"
+    Name: Navdata
 
   Extra:
     Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
-    Proxy: Extra:default -h 0.0.0.0 -p 9000
+    Proxy: "Extra:default -h localhost -p 9000"
+    Name: Extra
 
   Vmax: 3
   Wmax: 0.7
