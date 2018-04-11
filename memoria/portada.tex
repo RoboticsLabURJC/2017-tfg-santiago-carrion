@@ -1,31 +1,75 @@
-\documentclass{new_cit_thesis}
+\documentclass[a4paper, 12pt]{book}
+%\usepackage[T1]{fontenc}
+
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel} % Comenta esta línea si tu memoria es en inglés
 \usepackage{url}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{mathtools}
-\usepackage{vwcol} 
-\usepackage{subfig}
+%\usepackage[dvipdfm]{graphicx}
 \usepackage{graphicx}
+\usepackage{float}  %% H para posicionar figuras
+\usepackage[nottoc, notlot, notlof, notindex]{tocbibind} %% Opciones de índice
+\usepackage{latexsym}  %% Logo LaTeX
 \usepackage{enumitem}
-\usepackage{listings}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{fontenc}
-\usepackage[utf8x]{inputenc}
-\usepackage{lmodern,textcomp}
+
+\title{Memoria del Proyecto}
+\author{Santiago Carrión Vivanco}
+
+\renewcommand{\baselinestretch}{1.5}  %% Interlineado
 
 \begin{document}
 
-\unilogo{img/urjc_logo.jpg}  
-\title{Scratch4Robots}
-\author{Santiago Carrión Vivanco}
-\degreeaward{Trabajo de fin de grado}                 
-\university{Universidad Rey Juan Carlos}    
-\address{Tutor: Jose Maria Cañas Plaza} 
-\copyyear{\the\year}                               
-\pubnum{}                                          
-\dedication{}  		   
+\renewcommand{\refname}{Bibliografía}  %% Renombrando
+\renewcommand{\appendixname}{Apéndice}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PORTADA
+
+\begin{titlepage}
+\begin{center}
+\begin{tabular}[c]{c c}
+%\includegraphics[bb=0 0 194 352, scale=0.25]{logo} &
+\includegraphics[scale=0.25]{img/urjc_logo.jpg} &
+\begin{tabular}[b]{l}
+\Huge
+\textsf{UNIVERSIDAD} \\
+\Huge
+\textsf{REY JUAN CARLOS} \\
+\end{tabular}
+\\
+\end{tabular}
+
+\vspace{3cm}
+
+\Large
+GRADO EN INGENIERÍA TELEMÁTICA
+
+\vspace{0.4cm}
+
+\large
+Curso Académico 2017/2018
+
+\vspace{0.8cm}
+
+Trabajo Fin de Grado
+
+\vspace{2.5cm}
+
+\LARGE
+SCRATCH4ROBOTS
+
+\vspace{4cm}
+
+\large
+Autor : Santiago Carrión Vivanco \\
+Tutor : Jose María Cañas Plaza
+\end{center}
+\end{titlepage}
+
+\newpage
+\mbox{}
+\thispagestyle{empty} % para que no se numere esta pagina
 
 \maketitle
 
