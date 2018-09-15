@@ -31,7 +31,35 @@ lenguaje Python.
 \section{Metdología de trabajo}
 \label{sec:metodologia}
 
-Metodología
+Dada la naturaleza del proyecto, y al igual que en cualquier otro proyecto de software, es necesario el uso de un modelo que defina el ciclo de vida de la aplicación. Para el desarrollo de este proyecto hemos decidido adoptar el modelo de desarrollo en espiral.
+TODO BIBLIOGRAFIA
+El modelo en espiral consiste en una serie de ciclos que se repiten en forma de
+bucle, cada ciclo representa un conjunto de actividades. Las actividades no están
+jadas a priori, sino que se eligen en función de las realizadas previamente. Estos
+ciclos se irán ejecutando hasta que la aplicación sea aceptada y no requiera otro
+ciclo. Este modelo, definido por Barry Boehm en 1986, se basa en una espiral en la que cada iteración representa un conjunto de actividades.Estas actividades no tienen prioridad, se elegirá en la fase de análisis de riesgos. Así, cada iteración está dividida en las siguientes actividades:
+
+\begin{itemize}
+\item Determinar objetivos: en esta actividad se definirá el objetivo de la iteración actual. Siguiendo este
+modelo el objetivo final del proyecto se divide en subobjetivos.
+\item Análisis de riesgo: en esta actividad, se lleva a cabo varios estudios con el propósito de conocer las
+posibles amenazas o eventos no deseados que se puedan producir en el objetivo actual.
+\item Desarrollar y probar: llegados a este punto será necesario la verificación del correcto funcionamiento realizado en la iteración para subsanar los errores y que estos no prosigan en las siguientes iteraciones.
+\item Planificación: en esta actividad se revisarán las fases anteriores para determinar si se debería continuar.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/metodologia_espiral}
+    \caption{Desarrollo en espiral}
+    \label{fig:espira}
+\end{figure}
+
+Para materializar estas actividades e iteraciones mantuvimos reuniones semanales durante todo el desarrollo del trabajo. De este modo, cada semana marcábamos un nuevo subobjetivo. Si el anterior se había completado, planificábamos el siguiente. Si por el contrario, no sé había completado, ahondábamos en el objetivo actual para corregir los errores o volver a planificarlo.
+
+Todo el código fuente generado se mantuvo en un repositorio con un sistema de control de versiones (SVN), \textit{GIT} en nuestro caso, accesible desde internet[TODO enlace a git].
+
+De este modo el tutor y cualquier otra persona interesada tiene acceso en cualquier momento al código, además nos apoyamos del sistema de apertura de \textit{issues} en el repositorio remoto \textit{GIT} para cada implementación que se necesitaba desarrollar para la mejora del proyecto. 
 
 \section{Plan de trabajo}
 \label{sec:plan}

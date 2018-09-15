@@ -6,7 +6,7 @@ Diseño
 \section{kurt}
 \label{sec:kurt}
 
-Kurt
+Kurt es una biblioteca de Python que permite la manipulación compleja de proyectos Scratch (archivos .sb) a través de simples comandos de Python. Incluye un compilador y descompilador, que permite que un proyecto se cargue en un conjunto de objetos de Python, y un compilador que permite el empaquetamiento de un conjunto de scripts de imágenes / texto en proyectos.
 
 \section{Traduccion con kurt}
 \label{sec:traduccion}
@@ -16,9 +16,19 @@ traduccion con kurt
 \section{Desarrollo de bloques}
 \label{sec:desarrollo-de-bloques}
 
-Desarrollo de bloques
+
+Scratch facilita el uso de bloques personalizados mediante extensiones externas, estas  extensiones externas a la aplicación se definen mediante el uso de ficheros JSON, aunque por convención, en Scratch tentrán extensión .s2e .
+
+Este tipo de ficheros se creó para la comunicación mediante HTTP de bloques con aplicaciones auxiliares, por ejemplo algún tipo de hardware.
+Un \textit{AppHelper} se ejecuta en segundo plano, lista para ser utilizada por los proyectos de Scratch que usan esa extensión.
+Cada extensión tiene un número de puerto único. Scratch busca la aplicación de ayuda en el número de puerto dado en la máquina local.
+Se comunica con el \textit{AppHelper} utilizando el protocolo HTTP, la aplicación envía comandos al \textit{AppHelper} y este envía los valores del sensor y la información de estado a Scratch a través de solicitudes HTTP GET. Dado que el protocolo es HTTP estándar, cualquier navegador se puede usar para probar y depurar aplicaciones de ayuda.
+
+Pero nostros no vamos a utilzar esta funcionalidad, únicamente nos ayudamos de éste documento .s2e para definir nuestra extensión y pueda ser usada desde el IDE offline de scratch.
 
 \subsection{Bloques genericos}
+
+
 bloques genericos
 \subsection{Bloques de drone}
 bloques drone
