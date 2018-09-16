@@ -1,4 +1,23 @@
 integración
+Fases:
+
+se recorre un gran camino desde la idea inicial de la herramienta hasta su ejecución final, tanto en tiempo como en desarrollos. 
+
+Vamos a desglosar los diferenetes tramos por los que hemos pasado hasta cerrar una versión standalone y estable de la herramienta.
+0-Estado inicial
+Partimos de una versión parcialmente independiente de la herramienta ya propuesta por Raúl Perula desarrollada para Gsoc[enlace git-bibliografia].
+Como ya hemos hablado anteriormente, podría dividirse la herramienta en dos módulos, el módulo de traducción y generación de código, y la aplicación de este
+código sobre robótica.
+En esta fase nos encontramos con la parte de traducción y generación funcionando de forma relativamente aislada del resto, 
+su ejecución y funcionamiento es totalmente aislada a cualquier dependencia externa ya que se empaqueta en un paquete ROS, con todo lo 
+necesario para su ejecución. La dependencia la encontramos a la hora de ejecutar el código generado sobre el robot real o simulado.
+Este código está fuertemente acoplado a la plataforma JdeRobot, necesitando de su instalación completa ya que usa muchas de sus librerías.
+
+
+\section{Integración con JdeRobot}
+\label{sec:integracion-con-jderobot}
+En esta iteracion buscamos la total integracion de la herramienta en JdeRobot. Trabajando directamente con el equipo de desarrollo de JdeRobot 
+agregamos las librerías externas al framework e introducimos la herramienta.
 
 \section{Dependencias de la herramienta}
 \label{sec:dependencias}
@@ -8,9 +27,25 @@ Dependencias
 \section{Creación de paquete ROS Independiente}
 \label{sec:paquete-ros}
 
-Creacion paquete ros independiente
+Una vez introducida en la suit de programación buscamos todas y cada una de las dependencias, se refactoriza el código para depender de las menos librerías posibles 
+de JdeRobot y facilitar la futura migración de la herramienta a una versión complatemente independiente.
+
+--EXPLICAR COMO FUNCIONA UN PAQUETE ROS
+
+--SUBID A REPOS OFICIALES PASANDO CALIDAD DE CÓDIGO
+
+--CREACIÓN DE PAQUETES PIP
+
+--- QUE ES UN PAQUETE PIP
+
 
 \section{Documentación de la herramienta}
 \label{sec:documentacion}
 
-documentacion de la herramienta
+--documentacion en ros
+
+--documentacion en git
+
+--documenatacion en pagina d jderobot
+
+--apoyo de videotutoriales
