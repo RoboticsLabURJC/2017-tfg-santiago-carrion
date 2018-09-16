@@ -13,21 +13,28 @@ Se lanzó oficialmente en 2013 y ha sido completamente reescrito en Adobe Flash 
 Scratch se define por una interfaz intuitiva y de simple manejo compuesta por tres zonas claramente diferenciadas. En la zona izquierda tendremos un escenario y un selector de \textit{sprites}, en el centro encontramos las diferentes categorías de bloques que podemos utilizar y un listado de los bloques pertenecientes a la categoría seleccionada, y por último tendremos un espacio vacio en la parte derecha en la que crearemos nuestro proyecto, con el simple movimiento de arrastrar el bloque deseado.
 
 Tendremos bloques de las siguientes categorias:
-\begin{description}[align=left]
-\item [Movimiento] Mueve objetos y cambia ángulos.	  	 	
-\item [Eventos] Contiene manejadores de eventos situado al principio de cada grupo de instrucciones.
-\item [Apariencia] Controla el aspecto visual del objeto, añade bocadillos de habla o 
+\begin{itemize}
+\item \textbf{Movimiento}: Mueve objetos y cambia ángulos.	  	 	
+\item \textbf{Eventos}: Contiene manejadores de eventos situado al principio de cada grupo de instrucciones.
+\item \textbf{Apariencia}: Controla el aspecto visual del objeto, añade bocadillos de habla o 
 pensamiento, cambia el fondo, ampliar o reducir.	 	
-\item [Control] Sentencian condicionales.
-\item [Sonido] Reproduce ficheros de audio y secuencias programables.	 	
-\item [Sensores] Los objetos pueden interactuar con el ambiente que ha creado el usuario.
-\item [Lápiz] Control del ancho, color e intensidad del lápiz.	 	
-\item [Operadores] Operadores matemáticos, generador aleatorio de números, operadores booleanos.
-\item [Datos] Creación de variables y listas.	 	
-\item [Mas Bloques] Dispositivos o bloques externos creados por el usuario.
-\end{description}
+\item \textbf{Control}: Sentencian condicionales.
+\item \textbf{Sonido}: Reproduce ficheros de audio y secuencias programables.	 	
+\item \textbf{Sensore}: Los objetos pueden interactuar con el ambiente que ha creado el usuario.
+\item \textbf{Lápiz}: Control del ancho, color e intensidad del lápiz.	 	
+\item \textbf{Operadores} Operadores matemáticos, generador aleatorio de números, operadores booleanos.
+\item \textbf{Datos}: Creación de variables y listas.	 	
+\item \textbf{Mas Bloques}: Dispositivos o bloques externos creados por el usuario.
+\end{itemize}
 
 Al ser una herramienta madura y muy extendida existe una gran comunidad con la que compartir y de la que obtenter proyectos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.32]{img/scratch_IDE.png}
+  	\caption{Espacio de trabajo de Scratch 2.0}
+  	\label{fig:gazebo}
+\end{figure}
 
 \section{JdeRobot}
 \label{sec:jderobot}
@@ -83,3 +90,63 @@ servidor es el encargado de realizar los calculos y la generación de los datos 
 El cliente proporciona una interfaz grágica basada en QT que incluye la visualización de la simulación y una serie de controles de multitud de propiedades. Esta configuración permite lanzar multiples clientes sobre un servidor, consiguiendo multiples interfaces de la misma simulación.
 Destacar que en 2013, este simulador se utilizó en la Virtual Robotics Challenge, un componente del DARPA Robotics Challenge.
 En este proyecto Gazebo se emplea para probar la solución desarrollada en un entorno controlado para después, pasar a un entorno real.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.50]{img/gazebo.PNG}
+  	\caption{Entorno de simulación Gazebo}
+  	\label{fig:gazebo}
+\end{figure}
+
+\section{ROS}
+\label{sec:ros}
+
+Es un framework para el desarrollo de software para robots que provee la funcionalidad de un sistema operativo en un clúster heterogéneo. ROS (Robot Operating System) proporciona bibliotecas y herramientas para ayudar a los desarrolladores de software a crear aplicaciones de robots. Proporciona abstracción de hardware, controladores de dispositivo, bibliotecas, visualizadores, paso de mensajes, administración de paquetes y más.
+
+ Es completamente de código abierto (BSD) y gratuito para que otros lo usen, cambien y comercialicen. SU objetivo principal es permitir que los desarrolladores de software creen aplicaciones de robots más capaces de forma rápida y fácil en una plataforma común.
+
+ROS se desarrolló originalmente en 2007 bajo el nombre de switchyard por el Laboratorio de Inteligencia Artificial de Stanford.
+ 
+Desde 2008, el desarrollo continua primordialmente en Willow Garage, un instituto de investigación robótico con más de veinte instituciones colaborando en un modelo de desarrollo federado
+
+Vamos a describir a desde una perspectiva a muy alto nivel los conceptos básicos en los que se basa su arquitectura.
+
+
+\subsection{Maestro ROS}
+El Maestro permite que todas las demás piezas de software de ROS (Nodos) encuentren y hablen entre sí. Sin el Maestro, los nodos no podrían encontrarse, intercambiar mensajes o invocar servicios. De esta forma, no tenemos que especificar nunca específicamente "Enviar esta información del sensor a esa computadora en 127.0.0.1. Podemos simplemente decirle al Nodo 1 que envíe mensajes al Nodo 2.
+El ROS Master proporciona registro y búsqueda de nombres para el resto del gráfico de computación.
+
+BIBLIOGRAfIA
+
+\subsection{Nodos}
+Algunos robots llevan varias computadoras, cada una de las cuales controla un subconjunto de los sensores o actuadores del robot. Incluso dentro de una sola computadora, a menudo es una buena idea dividir el software del robot en pequeñas partes independientes que cooperan para lograr el objetivo general. Para esto existen los nodos de ros.
+Los nodos son procesos que realizan cálculos. ROS está diseñado para ser modular en una escala de grano fino; un sistema de control de robot generalmente comprende muchos nodos.
+Por ejemplo, un nodo controla un láser, un nodo controla los motores de las ruedas, un nodo proporciona una vista gráfica del sustema y así sucesivamente. Un nodo ROS se escribo con el uso de una biblioteca cliente ROS, como roscpp o rospy, más alante describiremos en detalle el proceso de desarrollo de uno un nodo ros.
+
+\subsection{Servidor de Parámetros}
+El servidor de parámetros permite que los datos se almacenen por clave en una ubicación central. Actualmente es parte del Master.
+
+\subsection{Mensajes}
+Los nodos se comunican entre sí al pasar mensajes. Un mensaje es simplemente una estructura de datos, que comprende campos tipados. Los tipos primitivos estándar (entero, punto flotante, booleano, etc.) son compatibles, al igual que las matrices de tipos primitivos. Los mensajes pueden incluir estructuras y matrices anidadas arbitrariamente (al igual que las estructuras C).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{img/ros-architecture.png}
+  	\caption{Arquitectura básica ROS maestro-nodo}
+  	\label{fig:ros-arch}
+\end{figure}
+
+\subsection{Topics o Temas}
+
+
+Los mensajes se enrutan a través de un sistema de transporte con semántica de publicación suscripción. Un nodo envía un mensaje publicándolo en un tema determinado. El tema es un nombre que se usa para identificar el contenido del mensaje. Un nodo que está interesado en cierto tipo de datos se suscribirá al tema apropiado. Puede haber varios editores y suscriptores simultáneos para un único tema, y un solo nodo puede publicar y / o suscribirse a múltiples temas. En general, los editores y los suscriptores no conocen la existencia de los demás. La idea es desacoplar la producción de información de su consumo. Lógicamente, uno puede pensar en un tema como un bus de mensajes fuertemente tipado. Cada autobús tiene un nombre, y cualquiera puede conectarse al autobús para enviar o recibir mensajes, siempre que sean del tipo correcto.
+
+\subsection{Servicios}
+El modelo de publicación / suscripción es un paradigma de comunicación muy flexible, pero su transporte unidireccional de muchos a muchos no es apropiado para las interacciones de solicitud / respuesta, que a menudo se requieren en un sistema distribuido. La solicitud / respuesta se realiza a través de servicios, que están definidos por un par de estructuras de mensaje: una para la solicitud y otra para la respuesta. Un nodo proveedor ofrece un servicio con un nombre y un cliente usa el servicio enviando el mensaje de solicitud y esperando la respuesta. Las bibliotecas cliente de ROS generalmente presentan esta interacción al programador como si fuera una llamada de procedimiento remoto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{img/ros-architecture-3.jpg}
+  	\caption{Arquitectura básica ROS publicación-suscripción}
+  	\label{fig:ros-servicio}
+\end{figure}
