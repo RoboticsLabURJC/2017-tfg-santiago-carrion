@@ -3,6 +3,8 @@
 %\usepackage{bera}% optional: just to have a nice mono-spaced font
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
 \colorlet{punct}{red!60!black}
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
@@ -208,42 +210,53 @@ Tutor : Jose María Cañas Plaza
 
 \newpage
 \mbox{}
-\thispagestyle{empty} % para que no se numere esta pagina
+\thispagestyle{empty} % para que no se enumere esta pagina
 
 \maketitle
 
 \cleardoublepage
-\input{indice.tex}
+%%%% \'indice de contenidos
+\tableofcontents 
+%%%% \'indice de figuras
+\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
+\listoffigures % indice de figuras
+%%%% \'indice de tablas
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
+%\listoftables % indice de tablas
 
 \cleardoublepage
 \pagestyle{plain}
 \pagenumbering{arabic}
 \chapter{Introducción}
-\input{intro.tex}
+\input{1-introduccion.tex}
 
 \cleardoublepage
 \chapter{Objetivos}
-\input{objetivos.tex}
+\input{2-objetivos.tex}
 
 \cleardoublepage
 \chapter{Infraestructura}
-\input{infraestructura.tex}
+\input{3-infraestructura.tex}
 
 \cleardoublepage
 \chapter{Desarrollo}
-\input{desarrollo.tex}
+\input{4-desarrollo.tex}
 
 \cleardoublepage
 \chapter{Integración}
-\input{integracion.tex}
+\input{5-integracion.tex}
 
 \cleardoublepage
 \chapter{Experimentos}
-\input{experimentos.tex}
+\input{6-experimentos.tex}
 
 \cleardoublepage
 \chapter{Conclusiones}
-\input{conclusiones.tex}
+\input{7-conclusiones.tex}
 
+\nocite{*}
+\include{8-Bibliografia}
 \cleardoublepage
 \end{document}
