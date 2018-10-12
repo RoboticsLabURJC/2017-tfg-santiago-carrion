@@ -1,4 +1,4 @@
-\section{Scratch 2.0}
+\section{Scratch}
 \label{sec:scratch}
 
 Scratch es un proyecto del Grupo Lifelong Kindergarten del MIT Media Lab.
@@ -137,8 +137,6 @@ Los nodos se comunican entre sí al pasar mensajes. Un mensaje es simplemente un
 \end{figure}
 
 \subsection{Topics o Temas}
-
-
 Los mensajes se enrutan a través de un sistema de transporte con semántica de publicación suscripción. Un nodo envía un mensaje publicándolo en un tema determinado. El tema es un nombre que se usa para identificar el contenido del mensaje. Un nodo que está interesado en cierto tipo de datos se suscribirá al tema apropiado. Puede haber varios editores y suscriptores simultáneos para un único tema, y un solo nodo puede publicar y / o suscribirse a múltiples temas. En general, los editores y los suscriptores no conocen la existencia de los demás. La idea es desacoplar la producción de información de su consumo. Lógicamente, uno puede pensar en un tema como un bus de mensajes fuertemente tipado. Cada bus tiene un nombre, y cualquiera puede conectarse al bus para enviar o recibir mensajes, siempre que sean del tipo correcto.
 
 \subsection{Servicios}
