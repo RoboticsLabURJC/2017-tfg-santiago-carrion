@@ -29,7 +29,7 @@ En la programación visual entendemos por bloque a cada componente visual que co
 
 \subsection{Extensión de Scratch}
 
-Scratch facilita el uso de bloques personalizados mediante extensiones externas, estas  extensiones externas a la aplicación se definen mediante el uso de ficheros JSON, aunque por convención, en Scratch tendrán extensión .s2e. Este tipo de ficheros se creó para la comunicación mediante HTTP de bloques con aplicaciones auxiliares, por ejemplo algún tipo de hardware. Nostros no vamos a utilizar esta funcionalidad, únicamente nos ayudamos de este documento .s2e para definir nuestra extensión y pueda ser usada desde el IDE offline de scratch.\\
+Scratch facilita el uso de bloques personalizados mediante extensiones externas, estas  extensiones externas a la aplicación se definen mediante el uso de ficheros JSON, aunque por convención, en Scratch tendrán extensión .s2e. Este tipo de ficheros se creó para la comunicación mediante HTTP de bloques con aplicaciones auxiliares, por ejemplo algún tipo de hardware. Nosotros no vamos a utilizar esta funcionalidad, únicamente nos ayudamos de este documento .s2e para definir nuestra extensión y pueda ser usada desde el IDE offline de scratch.\\
 
 En este documento se define un objeto JSON, el cual será la definición de la extensión, en el que se incluye el nombre de la extensión, un puerto usado para la comunicación de componentes externos en caso de ser necesario y una lista de bloques de Scratch. \\
 
@@ -175,7 +175,7 @@ Estructuras de control básicas de programación.
 \item \textbf{If () Then, Else}: Comprueba la condición para que si la condición es verdadera, los bloques dentro de la primera condición se activen y si la condición es falsa, los bloques dentro de la segunda condición se activarán.
 \item \textbf{Repeat ()}: Un ciclo que repite la cantidad de veces especificada, sería la equivalencia al bucle \textit{for} en Python.
 \end{itemize}
-\item \textbf{Miscelaneos}
+\item \textbf{Otros}
 \begin{itemize}
 
 \item \textbf{say ()}: Imprime lo que le añadas como argumento, equivalente a \textit{print}.
@@ -213,7 +213,7 @@ Nos permiten obtener información de sensores incorporados en el drone.
 
 Cabe destacar de estos bloques que una vez traducidos al nodo final, que se consigue implementar el funcionamiento de drones bajo el middleware ROS, algo elaborado en este trabajo.\\
 
-Para ello nos apoyamos en MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, puente oficial entre nodos ROS y Mavlink\footnote{\url{https://github.com/mavlink}}, el protocolo de comunicación estandar para drones.
+Para ello nos apoyamos en MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, puente oficial entre nodos ROS y Mavlink\footnote{\url{https://github.com/mavlink}}, el protocolo de comunicación estándar para drones.
 
 \subsection{Bloques para robots con ruedas}
 \begin{itemize}
@@ -278,10 +278,10 @@ Una vez tenemos la lista de los Strings equivalentes a los bloques del proyecto 
 
 En este trabajo se modifica de forma notable la forma en la que se realizaba de forma inicial esta traducción, agregando una gran cantidad de bloques soportados y añadiendo un grado de recursividad que permite la traducción de bloques anidados.\\
 
-En la traducción nos apoyamos de unos diccionarios python en los que mapeamos el string equivalente al bloque Scratch con el equivalente python que queremos sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por nuestra extensión debemos de crear un método específico que contenga toda la lógica a implementar.
+En la traducción nos apoyamos de unos diccionarios Python en los que mapeamos el string equivalente al bloque Scratch con el equivalente Python que queremos sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando Python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por nuestra extensión debemos de crear un método específico que contenga toda la lógica a implementar.
 
-En este trabajo hemos refactorizado la totalidad de la lógica tras los bloques robóticos, dandole una mayor coherencia a todos ellos. Además de crear lógica completamente nueva para ciertos bloques agregados en esta versión. Cabe destacar el bloque referente a la detección de objetos de un cierto color.\\
+En este trabajo hemos refactorizado la totalidad de la lógica tras los bloques robóticos, dándole una mayor coherencia a todos ellos. Además de crear lógica completamente nueva para ciertos bloques agregados en esta versión. Cabe destacar el bloque referente a la detección de objetos de un cierto color.\\
 
-Usando la biblioteca openCV de Python y con técnicas de análisis computacional de imágenes, de una simple imagen somos capaces de obtener su posición en la imagen y su tamaño.\\
+Usando la biblioteca OpenCV de Python y con técnicas de análisis computacional de imágenes, de una simple imagen somos capaces de obtener su posición en la imagen y su tamaño.\\
 
-Además de la traducción, Scratch4Robots encapsula este código python en un nodo ROS, que contiene todo lo necesario para su posterior ejecución, con el único requisito de un fichero de configuración en el que especificaremos los tópicos que va a necesitar nuestro nodo. Cerrando de esta forma el ciclo de trabajo de la herramienta.\\
+Además de la traducción, Scratch4Robots encapsula este código Python en un nodo ROS, que contiene todo lo necesario para su posterior ejecución, con el único requisito de un fichero de configuración en el que especificaremos los tópicos que va a necesitar nuestro nodo. Cerrando de esta forma el ciclo de trabajo de la herramienta.\\
