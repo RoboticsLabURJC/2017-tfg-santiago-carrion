@@ -242,12 +242,9 @@ Para ello nos apoyamos en MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, pue
 
 
 \section{Traducción de bloques}
-El último paso será definir la estratégia que vamos a seguir para realizar la traducción de los bloques creados anteriormente, al nodo ROS final, programado en Python.
+El último paso será definir la estrategia que vamos a seguir para realizar la traducción de los bloques creados anteriormente, al nodo ROS final, programado en Python.
 
-\subsubsection{Biblioteca kurt}
-\label{sec:kurt}
-
-Vamos a estudiar más a fondo como trabaja con esta biblioteca y cómo nos ha ayudado en la traducción de bloques.\\
+Vamos a estudiar más a fondo como trabaja la biblioteca Kurt y cómo nos ha ayudado en la traducción de bloques.\\
 
 Kurt es una biblioteca de Python que permite la manipulación compleja de proyectos Scratch (archivos .sb o .sb2) a través de simples comandos de Python. Incluye un decompilador, que permite que un proyecto se cargue en un conjunto de objetos de Python, y un compilador que permite el empaquetamiento de un conjunto de scripts de imágenes / texto en proyectos scratch.\\
 
@@ -278,7 +275,7 @@ Una vez tenemos la lista de los Strings equivalentes a los bloques del proyecto 
 
 En este trabajo se modifica de forma notable la forma en la que se realizaba de forma inicial esta traducción, agregando una gran cantidad de bloques soportados y añadiendo un grado de recursividad que permite la traducción de bloques anidados.\\
 
-En la traducción nos apoyamos de unos diccionarios Python en los que mapeamos el string equivalente al bloque Scratch con el equivalente Python que queremos sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando Python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por nuestra extensión debemos de crear un método específico que contenga toda la lógica a implementar.
+En la traducción nos apoyamos de unos diccionarios Python en los que mapeamos el string equivalente al bloque Scratch con el equivalente Python que queremos sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando Python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por nuestra extensión debemos de crear un método específico que contenga toda la lógica a implementar.\\
 
 En este trabajo hemos refactorizado la totalidad de la lógica tras los bloques robóticos, dándole una mayor coherencia a todos ellos. Además de crear lógica completamente nueva para ciertos bloques agregados en esta versión. Cabe destacar el bloque referente a la detección de objetos de un cierto color.\\
 
