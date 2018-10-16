@@ -111,30 +111,17 @@ Antes de comenzar con los bloques propios a nuestra extensión vamos a necesitar
 
 A continuación mostramos todos los bloques genéricos de los que podemos hacer uso desde la herramienta Scratch4Robots, ya que hemos implementado su traducción a Python.
 
-\begin{figure}[H]
-	\begin{minipage}{0.33\textwidth}
-    	\centering
-    	\includegraphics[scale=0.40]{img/bloques-control.png}
-     	\caption{Bloques de control}
-  		\label{fig:bloques-control}
-   	\end{minipage}\hfill
-   	\begin {minipage}{0.33\textwidth}
-     	\centering
-     	\includegraphics[scale=0.40]{img/bloques-mat.png}
-  		\caption{Bloques matemáticos y lógicos}
-  		\label{fig:bloques-mat}
-	\end{minipage}
-	\begin {minipage}{0.33\textwidth}
-     	\centering
-     	\includegraphics[scale=0.40]{img/bloques-listas.png}
-     	\caption{Bloques de listas}
-     	\label{fig:bloques-listas}
-	\end{minipage}
-\end{figure}
-
 \begin{itemize}
 \item \textbf{Bloques de operadores matemáticos}:
+
 Bloques fundamentales de cara a realizar una lógica posterior con los datos obtenidos desde los sensores de nuestros robots, estos bloques son una de las mejoras ofrecidas por este trabajo.
+\begin{figure}[H]
+    	\centering
+    	\includegraphics[scale=0.60]{img/bloques-mat.png}
+     	\caption{Bloques matemáticos y lógicos}
+  	\label{fig:mat}
+\end{figure}
+
 	\begin{itemize}
 
     \item \textbf{sqrt of ()}: Realiza la operación raíz cuadrada de un número dado
@@ -161,7 +148,15 @@ Permiten construir expresiones lógicas, se obtiene como resultado booleanos.
 \end{itemize}
 
 \item \textbf{Bloques de control}:
+
 Estructuras de control básicas de programación.
+
+\begin{figure}[H]
+    	\centering
+    	\includegraphics[scale=0.60]{img/bloques-control.png}
+     	\caption{Bloques de control}
+  	\label{fig:control}
+\end{figure}
 \begin{itemize}
 \item \textbf{Wait () secs}: Pausa la ejecución el tiempo especificado, equivalente a la sentencia \textit{time.sleep()} de Python.
 \item \textbf{Forever}: Bucle infinito, equivalente a \textit{while(True)} en lenguaje Python.
@@ -177,7 +172,16 @@ Estructuras de control básicas de programación.
 \end{itemize}
 
 \item \textbf{Bloques de listas}:
+
 Esta serie de bloques desarrollados en esta versión han sido de gran ayuda a la hora de la refactorización y creación de otros bloques de mayor complejidad.
+
+\begin{figure}[H]
+     	\centering
+     	\includegraphics[scale=0.60]{img/bloques-listas.png}
+     	\caption{Bloques de listas}
+  	\label{fig:listas}
+\end{figure}
+
 \begin{itemize}
 \item \textbf{Insert () at () of ()}: Inserta elemento en la posición seleccionada de la lista indicada.
 \item \textbf{Item () of ()}: Devuelve el elemento almacenado en la posición indicada de la lista.
@@ -193,7 +197,13 @@ En este trabajo se ha realizado una refactorización completa de todos los bloqu
 \item \textbf{Bloques perceptivos}:
 Nos permiten obtener información de sensores incorporados en el drone.
 	\begin{itemize}
-	\item \textbf{Get pose3D}: Obtiene el valor de la posición 3D del robot
+	\item \textbf{Get pose3D}: Obtiene el valor de la posición 3D del robot.
+		\begin{figure}[H]
+     		\centering
+     		\includegraphics[scale=1.2]{img/block-pose.png}
+     		\caption{bloque que retorna la posición del robot}
+  		\label{fig:listas}
+		\end{figure}
 	\item \textbf{Color detection}: Nuevo componente añadido en esta versión, que haciendo uso de una cámara en el robot, detecta objetos de un determinado color, introducido como argumento, devolviendo una lista que contendrá las posiciones en los ejes x,y y el tamaño del objeto, en la imagen capturada por la cámara. 
 	\end{itemize}
 \item \textbf{Bloques de movimiento}
@@ -214,7 +224,7 @@ Para ello nos apoyamos en MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, pue
 \item \textbf{Bloques perceptivos}
 	\begin{itemize}
 	\item \textbf{Pose3D} :Obtiene el valor de la posición 3D del robot.
-	\item \textbf{Color detection}: Bloque homólogo al del drone, dado un color nos devuelve.
+	\item \textbf{Color detection}: Bloque homólogo al del drone, dado un color nos devuelve su posición en la imagen, y su tamaño.
 	\item \textbf{Frontal distance}: Obtiene la medida promedio de los datos del láser frontal. 
 	\end{itemize}
 \item \textbf{Bloques de movimiento}
@@ -276,3 +286,66 @@ En este trabajo hemos refactorizado la totalidad de la lógica tras los bloques 
 Usando la biblioteca OpenCV de Python y con técnicas de análisis computacional de imágenes, de una simple imagen somos capaces de obtener su posición en la imagen y su tamaño.\\
 
 Además de la traducción, Scratch4Robots encapsula este código Python en un nodo ROS, que contiene todo lo necesario para su posterior ejecución, con el único requisito de un fichero de configuración en el que especificaremos los tópicos que va a necesitar nuestro nodo. Cerrando de esta forma el ciclo de trabajo de la herramienta.\\
+
+
+
+
+Esta encapsulación del código generado en un nodo ROS la hemos conseguido través de una plantilla predefina por nosotros en la que se inserta el código traducido.
+
+\begin{lstlisting}[language=python,firstnumber=1]
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-n
+import time
+import config
+import sys
+import os
+import yaml
+import math
+# Establece la subscripcion a topics ROS para drones
+from drone import Drone 
+# Establece la subscripcion a topics ROS para robots
+from robot import Robot 
+
+def execute(robot):
+    try:
+    # Desde codigo, insertamos la traduccion obtenida aqui 
+    //
+    except KeyboardInterrupt:
+        raise
+        
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        path = os.getcwd()
+        open_path = path+'/'
+        filename = sys.argv[1]
+    else:
+        sys.exit("ERROR: Example:python my_generated_script.py cfgfile.yml")
+    # carga de configuraciones, topics ros a los que nos suscribimos, a traves de fichero yml.
+    if os.path.isabs(filename):
+        stream = open(filename, "r")
+        cfg = config.load(filename)
+    else:
+        stream = open(open_path + filename, "r")
+        cfg = config.load(open_path + filename)
+        yml_file = yaml.load(stream)
+        
+    for section in yml_file:
+    # En el yml de configuracion se define si se trata de robot o drone.
+    if section == 'drone':
+        # Si es drone se inicia la clase que hace la subscripcion a todos los topics ROS
+        robot = Drone(cfg)
+    	break
+    elif section == 'robot':
+    	# De forma analoga si se trata de un robot sobre ruedas
+        robot = Robot(cfg)
+    	break
+    # Ejecutamos el codigo generado, ya con todas las subscriciones a ROS hechas
+    execute(robot)
+
+\end{lstlisting}
+
+
+Esta plantilla abstrae de toda la dificultad tras la publicación y suscripción a tópicos ROS, y junto con el código traducido desde Scratch será el nodo final que el usuario ejecutará. Pero el proceso que hemos realizado para la completa integración con ROS no acaba aquí. Como se ve en la plantilla anterior, la suscripción a los topics se realiza a través de las librerías drone y robot. Esto se hace de cara a no sobrecargar el Nodo generado, con código que requiere de cierto nivel de entendimiento sobre la arquitectura ROS. Estos modulos python, que se facilita su uso mediante la isntalación de los paqquetes pip robot-scratch4robots y drone-scratch4robots. Generados en su totalidad en esta versión de la herramienta, Scratch4Robots 2.0.\\
+
+Entrando en más detalle de estas librerías, vamos a ver como realiza la suscripción a los Topicos.
+

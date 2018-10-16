@@ -1,6 +1,6 @@
-en este capítulo se describen brevemente las tecnologías
+En este capítulo se describen brevemente las tecnologías
 software en las que nos hemos apoyado para desarrollar el sistema propuesto
-en este Trabajo Fin de Grado. Nos ayudará a situarnos en contexto para siguientes capítulos en los que abordaremos en mayor profundidad la utilidad que nos ha aportado cada uno de ellos.
+en este Trabajo Fin de Grado. Nos ayudará a situarnos en contexto para siguientes capítulos en los que abordaremos en mayor profundidad la utilidad que nos ha aportado cada una de ellas.
 
 \section{Lenguaje visual Scratch}
 \label{sec:scratch}
@@ -49,7 +49,7 @@ Esta versión saldrá de forma oficial en Enero de 2019. Scratch 3.0 está escri
 
 Es una de las herramientas fundamentales en nuestro trabajo, serán a los proyectos generados en lenguaje de programación visual, a los que realicemos la traducción a nodos ROS escritos en Python con nuestra herramienta Scratch4Robots.
 
-\section{Python}
+\section{Lenguaje Python}
 \label{sec:python}
  
 Python\footnote{\url{https://www.python.org/}} es un lenguaje de programación administrado por la Python Software Foundation. Posee una licencia de código abierto, denominada Python Software Foundation License.\\
@@ -66,7 +66,7 @@ Pese a ser un lenguaje multiparadigma, principalmente está orientada a objetos 
 
 En este Trabajo de Fin de Grado usamos la versión 2.7, existiendo también en su versión 3.0, y es el lenguaje en el que basamos todo el desarrollo realizado tanto para la  la propia generación del Nodo ROS, que estará desarrollado en Python, como para la traducción de bloques Scratch, cuya lógica sera en su totalidad en este lenguaje.\\
 
-\section{Scratch4Robots 1.0}
+\section{Herramienta Scratch4Robots 1.0}
 Scratch4Robots 1.0\footnote{\url{https://github.com/TheRoboticsClub/colab-gsoc2017-RaulPerula}} desarrollado por Raúl Pérula-Martínez durante el Google Summer of Code 2017, ofrece la capacidad de traducción de bloques Scratch a código Python.\\
 
 La extensión de bloques que aporta a Scratch, realizan funcionalidades básicas de movimientos tanto para drones como para robots, disponiendo de un bloque por cada tipo de movimiento a realizar, movimientos en el eje X, eje Y o movimientos de rotación. Esto abarcaba la gama de movimientos de cualquier robot, pero dificultaba la integración de movimientos complejos ya que únicamente admite el movimiento en uno de los ejes a la vez.\\
@@ -75,9 +75,7 @@ En cuanto a traducción de bloques propios de Scratch, fuera del ámbito robóti
 
 Además el código generado a partir de la herramienta estaba basada en comunicaciones ICE, para el envió y obtención de información con el robot final.\\
 
-Nos centramos en la mejora de esta herramienta, buscando la creación de la versión Scratch4Robots 2.0, la cual estará provista de mejoras funcionales y de integración, como su paquetización, facilitando su forma de uso e instalación por parte del usuario final.
-
-\section{Kurt}
+\section{Biblioteca Kurt}
 \label{sec:kurt}
 Kurt\footnote{\url{https://en.scratch-wiki.info/wiki/Kurt}} es una biblioteca de Python que permite la manipulación compleja de proyectos de Scratch (archivos .sb y .sb2) a través de simples comandos de Python. Incluye un compilador y decompilador, que permite que un proyecto se cargue en un conjunto de objetos Python, y un compilador que permite cargar un conjunto de scripts de imágenes o texto en proyectos.\\
 
@@ -154,7 +152,7 @@ Los mensajes se enrutan a través de un sistema de transporte con semántica de 
 \subsection{Servicios}
 El modelo de publicación / suscripción es un paradigma de comunicación muy flexible, pero su transporte unidireccional de muchos a muchos no es apropiado para las interacciones de solicitud / respuesta, que a menudo se requieren en un sistema distribuido. La solicitud / respuesta se realiza a través de servicios, que están definidos por un par de estructuras de mensaje: una para la solicitud y otra para la respuesta. Un nodo proveedor ofrece un servicio con un nombre y un cliente usa el servicio enviando el mensaje de solicitud y esperando la respuesta. Las bibliotecas cliente de ROS generalmente presentan esta interacción al programador como si fuera una llamada de procedimiento remoto.\\
 
-\section{Gazebo}
+\section{Simulador Gazebo}
 \label{sec:gazebo}
 Gazebo\footnote{\url{http://gazebosim.org/}} es un simulador 3D para robots, es un proyecto de Open Source Robotics Fundation distribuido bajo la licencia Apache 2.0, con un motor de físicas y cinemáticas muy potente, es la principal herramienta en la que se apoya el desarrollador para verificar de forma segura que su implementación cumple con el objetivo determinado. Este tipo de simuladores han conseguido una fuerte evolución del mundo de la robotica ya que nos permite desarrollar componentes para dispositivos y robots complejos de forma barata y rápida.
 Se trata de una herramienta altamente personalizable y moldeable que admite plugins que permiten una gestión más fina de los recursos de cara a conseguir una simulación más precisa o simplemente perimitir al desarrollador trabajar con mayor comodidad sobre el simulador.
