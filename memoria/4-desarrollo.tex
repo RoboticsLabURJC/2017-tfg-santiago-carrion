@@ -1,19 +1,13 @@
+Una vez presentado el contexto, los objetivos, así como las herramientas empleadas, en este capítulo se detalla la mejora desarrollada sobre la herramienta Scratch4Robots. Primero presentamos el diseño global y después analizaremos en detalle que aportaciones se han realizado y como se han llevado a cabo.
 \section{Diseño}
 \label{sec:diseno}
-
-Una vez presentado el contexto, los objetivos, así como las herramientas empleadas,
-en este capítulo se detalla la mejora desarrollada sobre la herramienta scracth4robots.
-Primero presentaremos el diseño global y después analizaremos en detalle que aportaciones se han realizado y como se han llevado a cabo.
-
-Para englobar todos los componentes ya definidos en un mismo contexto vamos a definir la arquitectura y diseño de la herramienta.\\
-
+Para englobar todos los componentes ya definidos en un mismo contexto vamos a definir la arquitectura y diseño de la herramienta.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.30]{img/diseno.jpg}
   	\caption{Diseño de scratch4robots}
   	\label{fig:s4r}
 \end{figure}
-
 Partimos de un proyecto generado en el lenguaje de programación visual Scratch, al que se le ha agregado una serie de bloques robóticos, definidos e implementados por nosotros. Con estos nuevos bloques y los ya disponibles en Scratch se programará la lógica que queremos que siga nuestro robot.\\
 
 Una vez tenemos nuestro proyecto, Scratch4Robots se encarga de la traducción de este proyecto a un nodo ROS, programado en Python, que con un único fichero de configuración en el que indicamos los tópicos que vamos a necesitar, se encuentra listo para su ejecución sobre un robot en un entorno simulado, por ejemplo Gazebo.\\

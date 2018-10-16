@@ -1,24 +1,23 @@
-Tras haber expuesto las motivaciones y el contexto en el que se engloba este Trabajo de Fin de Grado, en este capítulo daremos una explicación más detallada del problema que se
-intenta resolver.
-
+Tras haber expuesto las motivaciones y el contexto en el que se engloba este Trabajo de Fin de Grado, en este capítulo daremos una explicación más detallada del problema que se intenta resolver.\\ 
 
 \section{Descripción del problema}
 \label{sec:descripcion del problema}
-El propósito general es la mejora de la herramienta Scratch4Robots, que traduce programas en el lenguaje visual Scratch a programas en Python dentro del entorno ROS o del entorno JdeRobot. Como principales subobjetivos tenemos:
-\begin{itemize}
-\item \textbf{Mejora de la herramienta Scratch4Robots}:
+El propósito general es la \textbf{mejora de la herramienta Scratch4Robots 1.0}, que traduce programas en el lenguaje visual Scratch a programas en Python dentro del entorno ROS o del entorno JdeRobot. Como principales subobjetivos tenemos:
+\begin{enumerate}
+\item \textbf{Mejora de la herramienta Scratch4Robots 1.0}:
 
-Esta mejora la llevamos a cabo en la agregación de nuevos bloques visuales, y la refactorización de los ya existentes para aumentar las posibilidades y facilitar la usabilidad de la herramienta. Además buscamos acercar al usuario la herramienta con una documentación ajustada a usuarios con perfiles poco técnicos, acompañado de ejemplos didácticos.
+Partimos de la versión inicial de Scratch4Robotos, esta mejora la llevamos a cabo con la agregación de nuevos bloques visuales, y la refactorización de los ya existentes para aumentar las posibilidades y facilitar la usabilidad de la herramienta. Buscamos acercar al usuario la herramienta con una documentación ajustada a usuarios con perfiles poco técnicos, acompañado de ejemplos didácticos, mejorando su funcionamiento actual para que se ejecuten sobre comunicaciones ROS.
 
-\item \textbf{Generación de paquete ROS, para
-facilitar su uso}:
+\item \textbf{Paquetización de la herramienta}:
 
-Se va a publicar la herramienta en forma de paquete ROS, de forma que pueda ser instalable en cualquier máquina con un sistema operativo Ubuntu, y pueda acceder a sus funcionalidades a través de la consola de comandos, sin necesidad de descargar el código fuente de la herramienta. De esta forma evitamos que el usuario tenga que indagar en nuestro código fuente para tener que ejecutar nuestro nodo.
+Se va a publicar la herramienta en forma de paquete ROS, de forma que pueda ser instalable en cualquier máquina con un sistema operativo Ubuntu, y pueda acceder a sus funcionalidades a través de la consola de comandos, sin necesidad de descargar el código fuente de la herramienta. De esta forma evitamos que el usuario tenga que indagar en nuestro código para tener que ejecutar el nodo.
 
-\item \textbf{Validación experimental con robots simulados}:
+Además se van a externalizar todas sus dependencias en forma de paquetes pip, para facilitar el desarrollo de nuevas mejoras en un futuro y su facilidad de instalación.
 
-Buscamos exponer con forma de ejemplos prácticos, posibles casos de uso de la herramienta, de distintas complejidades.
-\end{itemize}
+\item \textbf{Validación experimental con ROS}:
+
+Buscamos exponer con forma de ejemplos prácticos, posibles casos de uso de la herramienta, de distintas complejidades. Todos los ejemplos propuestos deben de ejecutarse sobre comunicaciones puramente ROS, validando la integración total de la herramienta con su arquitectura.
+\end{enumerate}
 
 
 \section{Requisitos}
@@ -30,7 +29,7 @@ los siguientes requisitos:
 \begin{itemize}
 \item El desarrollo deberá ser autocontenido en lo que sea posible, esto quiere decir que todas las librerías y dependencias de nuestra herramienta deberán estar contenidas en su interior. La programación se realizará en el
 lenguaje Python.
-\item El software desarrollado deberá ser compatible con Ubuntu 16.04, ROS-kinetic y Scratch 2.0 serán los únicos elementos indispensables para el correcto funcionamiento de nuestra herramienta.
+\item El software desarrollado deberá ser compatible con Ubuntu 16.04, ROS-kinetic y Scratch 2.0, en su versión offline, serán los únicos elementos indispensables para el correcto funcionamiento de nuestra herramienta.
 \item Todos los componentes desarrollados deberán ser compatibles tanto trabajando en entornos simulados, como usando robots reales, esto se consigue usando todas las abstracciones de las que nos provee JdeRobot, y de todas las funcionalidades del middleware ROS.
 \end{itemize}
 
@@ -76,7 +75,7 @@ Simplificaremos la labor a desarrollar en este Trabajo de Fin de Grado en varios
 Como punto de partida, y durante el comienzo del trabajo nos centramos en la familiarización con el software que vamos a utilizar y desarrollar en un futuro. Estudamos JdeRobot, que es la plataforma de desarrollo principal utilizada en la mayoría de proyectos realizados en el departamento de robótica de la URJC. El objetivo principal de esta fase es aprender a utilizar este software, sus componentes y sus drivers para más adelante utilizarlos como parte de nuestro proyecto. Como parte del aprendizaje, se desarrolla una herramienta externa al core principal pero que usa de librerías y recursos de ella.\\
 
 Además de JdeRobot, posteriormente nos centramos en ROS, que está muy presente en este trabajo, necesitando un conocimiento en profundidad de su arquitectura, su uso y de los componentes necesarios para desarrollar nuestro paquete propio basado en ROS.
-\item \textbf{Estudio de Kurt y otras bibliotecas implicadas en la herramienta}: 
+\item \textbf{Estudio de bibliotecas directamente implicadas en la herramienta}: 
 
 En un segundo periodo estudiaremos las bibliotecas implicadas en el funcionamiento interno de la herramienta, como punto fuerte de esta fase está el estudio de la biblioteca Kurt, que nos permite obtener toda la información necesaria de un proyecto Scratch, conocimiento de su API y su funcionamiento interno para saber qué podemos llegar a obtener y como usar esa información para proporcionar una traducción robusta al lenguaje Python.
 \item \textbf{Mejora y desarrollo de nuevas funcionalidades}: 
@@ -91,5 +90,5 @@ Como objetivo tenemos la creación y publicación de nuestra herramienta como un
 Con la documentación buscamos hacer la herramienta lo más intuitiva posible, mejorando scripts de lanzamiento y de generación de código. Creando ejemplos autocontenidos para una rápida demostración de la potencia de la herramienta y generando tutoriales tanto escritos como con vídeo para evitar confusiones.
 \item \textbf{Validación Experimental}:
 
-Por último buscamos la validación del funcionamiento de la herramienta, desarrollando ejemplos de distintas complejidades.
+Por último buscamos la validación del funcionamiento de la herramienta, desarrollando ejemplos de distintas complejidades, de cara a probar los cambios efectuados para su funcionamiento con comunicaciones ROS.
 \end{itemize}
