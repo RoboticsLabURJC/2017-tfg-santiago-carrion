@@ -8,12 +8,13 @@ Además de los ejemplos mostrados en este apartado, se ha creado una batería de
 En este ejemplo hacemos uso de un robot con ruedas, para ser más exactos de un Turtlebot. Para ejecutar las pruebas utilizamos Gazebo como simulador, cargando un entorno con obstáculos repartidos como se aprecia en la figura.\\
 
 El objetivo directo de este experimento es la programación de un robot Turtlebot, capaz de evitar obstáculos de forma autónoma, con la ayuda de un sensor láser incorporado en su parte frontal. Esto lo vamos a conseguir usando únicamente la lógica de la que disponemos en Scratch junto con la extensión que aporta nuestra aplicación Scratch4Robots.\\
+\pagebreak
 
-Se puede apreciar con estos ejemplos el poder didáctico de la herramienta. Su simpleza y sencillez hacen de ella perfecta para la enseñanza a personas con pocos conocimientos técnicos.
+Se puede apreciar con estos ejemplos el poder didáctico de la herramienta. Su simpleza y sencillez hacen de ella perfecta para la enseñanza a personas con pocos conocimientos técnicos.\\
 
-Además este ejemplo podemos verlo en nuestro día a día con las famosas aspiradoras autónomas (iRobot Roomba), por lo que vemos una aplicación directa que podría tener nuestra aplicación fuera del ámbito didáctico.
+Además este ejemplo podemos verlo en nuestro día a día con las famosas aspiradoras autónomas (iRobot Roomba), por lo que vemos una aplicación directa que podría tener nuestra aplicación fuera del ámbito didáctico.\\
 
-Vamos a seguir el ciclo de vida de nuestra aplicación, explicando el proceso que lleva a la consecución de nuestro objetivo.
+Vamos a seguir el ciclo de vida de nuestra aplicación, explicando el proceso que lleva a la consecución de nuestro objetivo.\\
 
 En primer lugar y con ayuda de nuestros bloques, desarrollamos la aplicación en Scratch. Una vez tenemos nuestro proyecto acabado y guardado, con la herramienta Scratch4Robots, ya instalada en nuestro equipo y mediante el uso de un solo comando realizaremos la traducción del proyecto.\\
 
@@ -23,9 +24,8 @@ En primer lugar y con ayuda de nuestros bloques, desarrollamos la aplicación en
   	\caption{Programación en Scratch del Turtlebot}
   	\label{fig:turtlebot}
 \end{figure}
-
-Esta simpleza en la ejecución la conseguimos mediante las funcionalidades que nos aporta ROS para la ejecución de nodos, esto se consigue tras la labor de integración realizada. El comando a ejecutar sería:
 \pagebreak
+Esta simpleza en la ejecución la conseguimos mediante las funcionalidades que nos aporta ROS para la ejecución de nodos, esto se consigue tras la labor de integración realizada. El comando a ejecutar sería:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 ~$ rosrun scratch4robots scratch2python myscratchaproyect.sb2
@@ -51,34 +51,23 @@ Explicando un poco el comando anterior, \textit{rosrun} sería el comando que no
                 robot.move_vector(mylist2)
                 
 \end{lstlisting}
-
-Tras la traducción obtenemos un nodo ROS completamente preparado para su ejecución sobre el robot Turtlebot, únicamente con la dependencia de un fichero de configuración que describiremos a continuación:
 \pagebreak
+Tras la traducción obtenemos un nodo ROS completamente preparado para su ejecución sobre el robot Turtlebot, únicamente con la dependencia de un fichero de configuración que describiremos a continuación:
 \begin{lstlisting}[language=json,firstnumber=1]
 robot:
   Motors:
-    Server: 2 # ROS
     Topic: "/mobile_base/commands/velocity"
     Name: robotMotors
-    maxW: 0.7
-    maxV: 4
-
   Laser:
-    Server: 2 # ROS
     Topic: "/scan"
     Name: robotLaser
-
   Pose3D:
-    Server: 2 # ROS
     Topic: "/odom"
     Name: robotPose3d
-
   Camera1:
-    Server: 2 # ROS
     Format: RGB8
     Topic: "/cameraL/image_raw"
     Name: robotCamera1
-
   NodeName: robot
 \end{lstlisting}
 En este fichero se observa los distintos actuadores y sensores que necesitará nuestro nodo, además por cada sensor se define el Tópico al que nuestro nodo se subscribe para enviar y recoger los datos que necesitemos de nuestro robot. En este caso darle especial importancia a la obtención de los datos del sensor laser, protagonista de nuestro ejemplo.
@@ -150,22 +139,17 @@ Y por último, ya con nuestro nodo generado, agregando la configuración pertine
 \begin{lstlisting}[language=json,firstnumber=1]
 drone:
   Camera:
-    Format: RGB8
     Topic: "/solo/cam_frontal/image_raw"
-    Name: UAVViewerCamera
-    
+    Name: UAVViewerCamera    
   Pose3D:
     Topic: "/mavros/local_position/odom"
     Name: UAVViewerPose3d
-    
   CMDVel:
     Topic: "/mavros/setpoint_velocity/cmd_vel"
-    Name: UAVViewerCMDVel
-    
+    Name: UAVViewerCMDVel    
   Navdata:
     Topic: "/IntrorobROS/Navdata"
-    Name: UAVViewerNavdata
-    
+    Name: UAVViewerNavdata 
   Extra:
     TopicArming: "mavros/cmd/arming"
     TopicLand: "mavros/cmd/land"
