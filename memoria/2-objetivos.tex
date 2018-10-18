@@ -1,4 +1,4 @@
-﻿Tras haber expuesto las motivaciones y el contexto en el que se engloba este Trabajo de Fin de Grado, en este capítulo daremos una explicación más detallada del problema que se intenta resolver.\\ 
+Tras haber expuesto las motivaciones y el contexto en el que se engloba este Trabajo de Fin de Grado, en este capítulo daremos una explicación más detallada del problema que se intenta resolver.\\ 
 
 \section{Descripción del problema}
 \label{sec:descripcion del problema}
@@ -6,17 +6,17 @@ El propósito general es la \textbf{mejora de la herramienta Scratch4Robots 1.0}
 \begin{enumerate}
 \item \textit{Extensión y refactorización}:
 
- partimos de la versión inicial de Scratch4Robots, parte de la mejora la llevamos a cabo con la agregación de nuevos bloques visuales, y la refactorización de los ya existentes para aumentar las posibilidades y facilitar la usabilidad de la herramienta. Buscamos acercar al usuario la herramienta con una documentación ajustada a usuarios con perfiles poco técnicos, acompañado de ejemplos didácticos, mejorando su funcionamiento actual para que se ejecuten sobre comunicaciones ROS.
+ partiremos de la versión inicial de Scratch4Robots, parte de la mejora la llevamos a cabo con la agregación de nuevos bloques visuales, y la refactorización de los ya existentes para aumentar las posibilidades y facilitar la usabilidad de la herramienta. Buscamos acercar al usuario la herramienta con una documentación ajustada a usuarios con perfiles poco técnicos, acompañado de ejemplos didácticos, mejorando su funcionamiento actual para que se ejecuten sobre comunicaciones ROS.
 
 \item \textit{Paquetización de la herramienta}:
 
- se va a publicar la herramienta en forma de paquete ROS, de forma que pueda ser instalable en cualquier máquina con un sistema operativo Ubuntu, y pueda acceder a sus funcionalidades a través de la consola de comandos, sin necesidad de descargar el código fuente de la herramienta. De esta forma evitamos que el usuario tenga que indagar en nuestro código para tener que ejecutar el nodo.
+ se publicará la herramienta en forma de paquete ROS, de forma que pueda ser instalable en cualquier máquina con un sistema operativo Ubuntu, y pueda acceder a sus funcionalidades a través de la consola de comandos, sin necesidad de descargar el código fuente de la herramienta. De esta forma evitamos que el usuario tenga que indagar en nuestro código para tener que ejecutar el nodo.
 
  Además, se van a externalizar todas sus dependencias en forma de paquetes pip, para facilitar el desarrollo de nuevas mejoras en un futuro y su facilidad de instalación.
 
 \item \textit{Validación experimental con robots ROS}:
 
- buscamos exponer con forma de ejemplos prácticos, posibles casos de uso de la herramienta, de distintas complejidades. Todos los ejemplos propuestos deben ejecutarse sobre comunicaciones puramente ROS, validando la integración total de la herramienta con su entorno.
+ buscaremos exponer con forma de ejemplos prácticos, posibles casos de uso de la herramienta, de distintas complejidades. Todos los ejemplos propuestos deberán ejecutarse sobre comunicaciones puramente ROS, validando la integración total de la herramienta con su entorno.
 \end{enumerate}
 
 
@@ -80,7 +80,7 @@ Además de JdeRobot, posteriormente nos centramos en ROS, que está muy presente
 En un segundo periodo estudiaremos las bibliotecas implicadas en el funcionamiento interno de la herramienta. Como punto fuerte de esta fase está el estudio de la biblioteca Kurt, que nos permite obtener toda la información necesaria de un proyecto Scratch, conocimiento de su API y su funcionamiento interno para saber qué podemos llegar a obtener y cómo usar esa información para proporcionar una traducción robusta al lenguaje Python.
 \item \textbf{Mejora y desarrollo de nuevas funcionalidades}: 
 
-Una vez entendido el software del que nos ayudamos para el desarrollo de la herramienta, es momento de comenzar con la implementación de las mejoras. Aumentando el número de bloques robóticos propios que podremos usar en Scratch, esto es desarrollar la lógica detrás de cada bloque, todo programado en Python y la integración de estos bloques con Scratch. Dividimos los bloques entre bloques de uso genéricos, bloques aptos para drones y robots con ruedas. Estos bloques deben tener una funcionalidad muy específica y funcionar en armonía con el resto, tanto los propios de la aplicación Scratch como los nuevos bloques generados por nosotros propios de aplicaciones robóticas.
+Una vez entendido el software del que nos ayudamos para el desarrollo de la herramienta, es momento de comenzar con la implementación de las mejoras. Aumentaremos el número de bloques robóticos propios que podremos usar en Scratch, esto es desarrollar la lógica detrás de cada bloque, todo programado en Python y la integración de estos bloques con Scratch. Dividimos los bloques entre bloques de uso genéricos, bloques aptos para drones y robots con ruedas. Estos bloques deben tener una funcionalidad muy específica y funcionar en armonía con el resto, tanto los propios de la aplicación Scratch como los nuevos bloques generados por nosotros propios de aplicaciones robóticas.
 \item \textbf{Integración y documentación}: 
 
 Una vez terminadas las mejoras de funcionalidades de la herramienta, nos centraremos en la mejora de su integración y uso.
