@@ -79,7 +79,7 @@
       <file>Memoria.bcf</file>
     </requires>
     <requires type="editable">
-      <file>biblio.bib</file>
+      <file>Memoria.bib</file>
     </requires>
   </external>
 </requests>

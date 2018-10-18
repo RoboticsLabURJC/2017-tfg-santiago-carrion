@@ -155,8 +155,6 @@
 \title{Memoria del Proyecto}
 \author{Santiago Carrión Vivanco}
 \begin{document}
-\renewcommand{\refname}{Bibliografía}  %% Renombrando
-
 
 %%%%%%%%%%%%%%% Portada %%%%%%%%%%%%%%%%%%%%
 \include{0-portada}
@@ -208,22 +206,8 @@
 \cleardoublepage
 \chapter{Conclusiones}
 \input{7-conclusiones.tex}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% BIBLIOGRAFIA %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \cleardoublepage
 
-% Las siguientes dos instrucciones es todo lo que necesitas
-% para incluir las citas en la memoria
-\bibliographystyle{abbrv}
-\bibliography{Memoria}  % memoria.bib es el nombre del fichero que contiene
-% las referencias bibliográficas. Abre ese fichero y mira el formato que tiene,
-% que se conoce como BibTeX. Hay muchos sitios que exportan referencias en
-% formato BibTeX. Prueba a buscar en http://scholar.google.com por referencias
-% y verás que lo puedes hacer de manera sencilla.
-% Más información: 
-% http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
+\nocite{*}
+\include{8-Bibliografia}
 \end{document}

@@ -1,20 +1,18 @@
-Una vez explicado los nuevos desarrollos efectuados para esta versión de la herramienta, vamos a centrarnos en uno de los puntos claves de este trabajo, la paquetización de la herramienta, llegando a conseguir una fácil instalación e integración de esta. Esto lo conseguimos con un análisis de nuestras dependencias, desacoplando todas estas dependencias lo más que podamos para darle una mayor flexibilidad, y una vez desacopladas permitir la instalación de la herramienta, junto con sus dependencias de una forma sencilla, rápida y homogénea.
+Una vez explicado los nuevos desarrollos efectuados para esta versión de la herramienta, vamos a centrarnos en uno de los puntos claves de este trabajo, la paquetización de Scratch4Robots 2.0, llegando a conseguir una fácil instalación e integración de esta. Esto lo conseguimos con un análisis de sus dependencias, desacoplando todas estas dependencias lo más que podamos para darle una mayor flexibilidad, y una vez desacopladas permitir la instalación de la herramienta, junto con sus dependencias de una forma sencilla, rápida y homogénea.
 
 \section{Análisis de dependencias}
 \label{sec:dependencias}
-Partimos de una versión fuertemente acoplada con JdeRobot, siendo necesaria la instalación de toda la suit para el correcto funcionamiento de la herramienta. Esto añade una complejidad de instalación innecesaria a nuestra aplicación, cosa que no queremos ya que buscamos un uso educativo de ella, por lo que buscamos la mayor facilidad de instalación posible.\\
+Partimos de una versión fuertemente acoplada con JdeRobot, siendo necesaria la instalación de toda la suite para el correcto funcionamiento de la herramienta. Esto añade una complejidad de instalación innecesaria a nuestra aplicación, cosa que no queremos ya que buscamos un uso educativo de ella, por lo que buscamos la mayor facilidad de instalación posible.\\
 
 Como principal dependencia nos encontramos la biblioteca \textit{comm} de JdeRobot, biblioteca que como ya hemos explicado antes, abstrae al programador del tipo de comunicación que se quiera establecer con el robot final, pudiendo con un mismo punto de entrada, entablar una comunicación vía ROS o vía ICE. En este trabajo nos hemos centrado en la comunicación mediante ROS, por lo que se ha realizado una tarea de desacople de las funcionalidades ROS de la biblioteca \textit{comm}. El resultado de esta tarea de desacople es la creación de una nueva biblioteca, basada puramente en comunicación ROS.\\
 
-Esta biblioteca llamada JDRros será la encargada de crear y gestionar las comunicaciones entre nodos ROS de nuestras aplicaciones. Desde la publicación y suscripción de nodos, hasta el envío de mensajes a través de ellos.\\
+Esta biblioteca llamada \textit{commros}S será la encargada de crear y gestionar las comunicaciones entre nodos ROS de nuestras aplicaciones. Desde la publicación y suscripción de nodos, hasta el envío de mensajes a través de ellos.\\
 
 A su vez, la propia biblioteca \textit{comm} tenía dependencias con otras librería del entorno JdeRobot, en algunos casos hemos optado por refactorizar las clases puramente ROS, ya desacopladas de \textit{comm}, para que no hagan uso de estas dependencias. Mientras que en algunos casos, viendo la utilidad de estas librerías, se han optado por incorporar a nuestro proyecto. Un ejemplo de esta reutilización es la biblioteca \textit{Config} de JdeRobot.\\
 
-Para comprender la importancia de esta dependencia vamos a explicar brevemente su funcionalidad. Esta biblioteca nos ayuda a la carga de propiedades mediante un fichero .yml, que mediante una simple API, busca y retorna cualquier propiedad que se haya definido en este fichero. En nuestro caso es extremadamente útil, ya que podemos adaptar nuestro nodo ROS a cualquier robot y situación. Como hemos explicado anteriormente, ROS establece comunicación a través de nodos mediante la publicación de Topics, a los que el resto de nodos podrán subscribirse. En este fichero de comunicación establecemos los Topics de los que se va a nutrir nuestro nodo, mediante la librería \textit{Config} los cargamos y con las utilidades de la biblioteca ya mencionada \textit{JDRros}, nos subscribimos o publicamos en esos Topics.\\
+Para comprender la importancia de esta dependencia vamos a explicar brevemente su funcionalidad. Esta biblioteca ayuda a la carga de propiedades mediante un fichero .yml, que mediante una simple API, busca y retorna cualquier propiedad que se haya definido en este fichero. En nuestro caso es extremadamente útil, ya que podemos adaptar nuestro nodo ROS a cualquier robot y situación. Como hemos explicado anteriormente, ROS establece comunicación a través de nodos mediante la publicación de tópicos, a los que el resto de nodos podrán subscribirse. En este fichero de comunicación establecemos los tópicos de los que se va a nutrir nuestro nodo, mediante la librería \textit{Config} carga estos nodos y con las utilidades de la biblioteca ya mencionada \textit{commros}, se suscribie y publica en esos tópicos.\\
 
-Éstas serían las dependencias con respecto a JdeRobot, pero nuestra herramienta contiene dependencias externas.\\
-
-La más importante es con la ya conocida biblioteca Kurt, parte esencial en nuestro trabajo de traducción, y por lo tanto en el funcionamiento de la herramienta.
+Éstas serían las dependencias con respecto a JdeRobot, pero nuestra herramienta contiene dependencias externas. La más importante es con la ya conocida biblioteca Kurt, parte esencial en nuestro trabajo de traducción, y por lo tanto en el funcionamiento de la herramienta. Otra dependencia de importancia en nuestro proyecto es con la biblioteca OpenCV, la cual nos permite el análisis computacional de imágenes, y por lo tanto que nuestro bloque de visión funcione correctamente.
 
 \section{Creación y publicación de paquetes pip}
 \label{sec:pip}
@@ -22,7 +20,7 @@ Una vez hecho el análisis y desacoplo en mayor medida de nuestro código con es
 
 Con todo esto hemos dejado el camino preparado para conseguir que nuestra herramienta no sea un programa monolítico, en el que se encuentran incrustadas todas sus librerías y funcionalidades, teniendo que actualizar toda herramienta cada vez que ésta sufra un mínimo cambio en cualquiera de sus dependencias. \\
 
-Para dar el paso de una aplicación monolítica, a una distribuida, lo conseguimos mediante la paquetización de estas dependencias en paquetes Pip\footnote{\url{https://pip.pypa.io/en/stable/}} independientes.\\
+Para dar el paso de una aplicación monolítica a una distribuida, lo conseguimos mediante la paquetización de estas dependencias en paquetes pip\footnote{\url{https://pip.pypa.io/en/stable/}} independientes.\\
 
 Pip es un sistema de administración de paquetes utilizado para instalar y administrar paquetes de software escritos en Python. Todos los paquetes pip pueden encontrarse en el Python Package Index (PyPi)\footnote{\url{https://pypi.org/}}, siendo accesibles para todo el mundo en cualquier momento. Es fácil ver el potencial de este sistema, subiendo nuestras dependencias a PyPi somos capaces de instalar todas ellas de una sola atacada.\\
 
@@ -53,12 +51,21 @@ Modulo que contiene toda la lógica tras los bloques específicos de robots sobr
 Modulo que contiene toda la lógica tras los bloques específicos de drones que hemos creado para esta herramienta.
 \end{itemize}
 
+
+La publicación de estos paquete pip hace que sea instalable como cualquier otro módulo Python a través de linea de comandos:\\ 
+
+\begin{lstlisting}[language=json,firstnumber=1]
+~$ sudo pip install robot-scratch4robots drone-scratch4robots jderobot-kurt jderobot-jderobottypes jderobot-ros jderobot-config
+\end{lstlisting}
+
+Una vez instalado podremos hacer uso de ellos desde cualquier proyecto en nuestra máquina, como es el caso de nuestro propio paquete ROS, y los nodos generados tras su traducción.\\
+
 Con esto hemos modularizado al máximo nuestra herramienta, consiguiendo poder mejorar y ampliar su funcionalidad sin necesidad de generar una nueva versión completa de nuestra herramienta, además de conseguir la instalación de todas nuestras dependencias con una facilidad asombrosa.
 \section{Creación y publicación de paquete ROS}
 \label{sec:paquete-ros}
-Hasta ahora hemos externalizado nuestros módulos Python en paquetes pip, pero aún no hemos resuelto como facilitar el uso e instalación de nuestra herramienta, que como hemos expuesto, se trata de un nodo ROS. Antes de comenzar este trabajo la herramienta se basaba en un repositorio con el código fuente, el cual había que descargar al completo y manualmente instalar todo el entorno necesario para su correcto funcionamiento. Esto llegaba a ser engorroso e incluso complicado, ya que eran necesarias una gran cantidad de herramientas complementarias.\\
+Hasta ahora hemos externalizado nuestros módulos Python en paquetes pip, pero aún no hemos resuelto cómo facilitar el uso e instalación de nuestra herramienta, que como hemos expuesto, se trata de un nodo ROS. Antes de comenzar este trabajo la herramienta se basaba en un repositorio con el código fuente, el cual había que descargar al completo y manualmente instalar todo el entorno necesario para su correcto funcionamiento. Esto llegaba a ser engorroso e incluso complicado, ya que eran necesarias una gran cantidad de herramientas complementarias.\\
 
-La solución aportada en este trabajo es la creación de un paquete ROS y su posterior publicación a los repositorios públicos. Con esto, al igual que hemos hecho con los paquetes pip conseguimos que nuestra herramienta sea instalable como cualquier otro programa en un sistema operativo Ubuntu, mediante un solo comando. \\
+Una solución aportada en este trabajo es la creación de un paquete ROS y su posterior publicación a los repositorios públicos. Con esto, al igual que hemos hecho con los paquetes pip conseguimos que nuestra herramienta sea instalable como cualquier otro programa en un sistema operativo Ubuntu, mediante un solo comando. \\
 
 Para la creación del paquete nos ayudamos de \textit{catkin}\footnote{\url{http://wiki.ros.org/catkin/conceptual_overview}}. Es el sistema de compilación oficial de ROS. Combina macros de CMake y scripts de Python para proporcionar alguna funcionalidad además del flujo de trabajo normal de CMake. El flujo de trabajo de \textit{catkin} es muy similar al de CMake, pero agrega soporte para la infraestructura automática de 'encontrar paquetes ROS' y al mismo tiempo construir múltiples proyectos dependientes. Esto se consigue gracias al sistema de compilación personalizada que usa \textit{catkin}.\\
 
@@ -68,8 +75,15 @@ En nuestro caso el nodo principal que queremos exponer, es el encargado de la tr
 
 Para el último paso de nuestro proceso, la publicación del paquete, nos apoyamos de la herramienta \textit{bloom}\footnote{\url{http://wiki.ros.org/bloom}} proporcionada por la Open Source Robotics Foundation, que si hemos configurado correctamente nuestro paquete, automatizará la generación de los binarios que serán descargado por los usuarios finales, como se hace con cualquier otra instalación en Ubuntu. Tras realizar una petición al equipo que gestiona ROS y cumplir con los requisitos de calidad que ellos establecen, nuestro paquete será publicado.\\ 
 
-De esta forma hemos conseguido que Scratch4Robots\footnote{\url{http://wiki.ros.org/scratch4robots}} esté publicado de forma oficial como un paquete ROS, para su distribución Kinetic\footnote{\url{http://wiki.ros.org/kinetic}}, en repositorios públicos, además de todas sus dependencias. 
+La publicación del paquete hace que sea instalable en forma de binario, con el simple comando:\\ 
 
+\begin{lstlisting}[language=json,firstnumber=1]
+~$ sudo apt-get install ros-kinetic-scratch4robots
+\end{lstlisting}
+
+Una vez instalado podremos ejecutarlo desde linea de comandos con las facilidades que nos aporta ROS para el manejo de sus paquetes.\\
+
+De esta forma hemos conseguido que Scratch4Robots\footnote{\url{http://wiki.ros.org/scratch4robots}} esté publicado de forma oficial como un paquete ROS, para su distribución Kinetic\footnote{\url{http://wiki.ros.org/kinetic}}, en repositorios públicos, además de todas sus dependencias. 
 
 
 \section{Documentación de la herramienta}
@@ -81,7 +95,6 @@ En el repositorio oficial de Scratch4Robots\footnote{\url{https://github.com/Jde
 Además de los pasos para su instalación, se suministra un ejemplo para cada tipo de robot, robots con ruedas, y drones. Estos ejemplos contienen todo lo necesario para su ejecución en minutos, desde los proyectos Scratch ya generados, los ficheros de configuración necesarios para su ejecución, así como los comandos necesarios para la ejecución de los entornos simulados y una descripción detallada de su uso.\\
 
 En la página oficial de JdeRobot, Scratch4Robots\footnote{\url{http://jderobot.org/Scratch4Robots}} se documenta en más detalle, en la que además de la guía de instalación y uso de la herramienta, se muestran todos los bloques disponibles, su forma de uso e incluso como puedes desarrollar tus propios bloques.\\
-
 
 Con esto finalizamos la fase de integración de la herramienta, consiguiendo un entorno modular, de fácil instalación, y con guías de uso preparadas para usuarios con poco nivel técnico. Idóneo para niños y adultos con ganas de aprender a programar robots de forma sencilla y sin necesidad de gastar un tiempo desorbitado en el entendimiento en profundidad de éstos.
 
