@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
 \end{lstlisting}
 
-Entrando en más detalle de estas librerías, vamos a ver como realiza la suscripción y publicación en los tópicos desde una de ellas, con fragmentos de códigos obtenidos de la aplicación.\\
+Como hemos comentado, la lógica referente a ROS se aplica a través de dos librerñias, \textit{drone} y \textit{robot}. Entrando en más detalle de estas librerías, vamos a ver como realiza la suscripción y publicación en los tópicos desde una de ellas, con fragmentos de códigos obtenidos de la aplicación.\\
 
 \begin{lstlisting}[language=python,firstnumber=1]
 import config
@@ -97,7 +97,7 @@ class Robot():
 		return self.__pose3d_client.getPose3d()
 \end{lstlisting}
 
-Describiendo el fragmento de código anterior y como se aprecia en el esquema de más arriba, nuestro nodo ROS en Python, a través del objeto Python \textit{Robot}, que al iniciarse por primera vez hace la carga de propiedades del fichero de configuración que se le pasa como argumento. Estas propiedades como hemos comentado anteriormente serán los tópicos a los que se conectará nuestro nodo. Se realizará la suscripción o publicación a cada tópico de manera individual. En este caso y observando el código,  usamos el objeto \textit{ListenerPose3d}, para conectarnos al tópico de el que obtendremos la información publicada por el sensor de odometría del robot, del mismo modo se hace con \textit{PublisherMotors} para el uso de los motores del robot.\\
+Describiendo el fragmento de código anterior y como se aprecia en el esquema de más arriba, nuestro nodo ROS en Python, a través del objeto Python \textit{Robot}, establece las comunicaciones ROS al iniciarse por primera vez. Esto se consigue con la carga de propiedades del fichero de configuración que se le pasa como argumento. Estas propiedades como hemos comentado anteriormente serán los tópicos a los que se conectará nuestro nodo. Se realizará la suscripción o publicación a cada tópico de manera individual. En este caso y observando el código,  usamos el objeto \textit{ListenerPose3d}, para conectarnos al tópico de el que obtendremos la información publicada por el sensor de odometría del robot, del mismo modo se hace con \textit{PublisherMotors} para el uso de los motores del robot.\\
 
 En resumidas cuentas, al iniciarse el objeto Python, \textit{Robot} o \textit{Drone}, según se esté usando un tipo u otro, éste realiza la suscripción a todos los tópicos a través de la creación de un \textit{cliente} por cada una de estas suscripciones. Estos \textit{clientes} ya contienen métodos desde los que obtener mediante comunicaciones ROS, la información final tal y como la esperamos.\\
 
