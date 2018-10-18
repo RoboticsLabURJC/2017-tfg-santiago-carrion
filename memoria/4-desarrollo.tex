@@ -1,9 +1,9 @@
-Una vez presentado el contexto, los objetivos, así como las herramientas empleadas, en este capítulo se detalla la mejora desarrollada sobre la herramienta Scratch4Robots. Primero presentamos el diseño global y después analizaremos en detalle que aportaciones se han realizado y como se han llevado a cabo. Este apartado nos ayudará a entender en profundidad y el alcance de las mejoras realizadas sobre Scratch4Robots 1.0.\\
+Una vez presentado el contexto, los objetivos, así como las herramientas empleadas, en este capítulo se detalla la mejora desarrollada sobre la herramienta Scratch4Robots. Primero presentamos el diseño global y después analizaremos en detalle que aportaciones se han realizado y como se han llevado a cabo. Este apartado nos ayudará a entender en profundidad el alcance de las mejoras realizadas sobre Scratch4Robots 1.0.\\
 
 \clearpage
 \section{Diseño}
 \label{sec:diseno}
-Como diseño global de la herramienta, y detallando poco el funcionamiento su funcionamiento interno, podemos esquematizar Scratch4Robots 2.0 de la siguiente forma:\\
+Como diseño global de la herramienta y detallando de forma superficial su funcionamiento su, podemos esquematizar Scratch4Robots 2.0 de la siguiente forma:\\
 
 \begin{figure}[H]
     \centering
@@ -12,11 +12,11 @@ Como diseño global de la herramienta, y detallando poco el funcionamiento su fu
   	\label{fig:s4r-detalle}
 \end{figure}
 
-Esta es la poca complejidad con la que el usuario final tiene que lidiar, apreciándose su sencillez en el diseño y entendimiento a simple vista.\\
+Se aprecia la poca complejidad con la que el usuario final tiene que lidiar, su sencillez en el diseño y entendimiento a simple vista.\\
 
-El diseño básico consta de un programa, codificado mediante el lenguaje visual Scratch 2.0, que nuestra herramienta, Scratch4Robots 2.0, procesará y traducirá. Como resultado de este proceso obtenemos un nodo ROS, programado en Python, y un fichero de configuración, necesario para su ejecución. Este nodo ya estará preparado para ser ejecutado sobre drones y robots Turtlebots.\\
+El diseño básico consta de un programa, codificado mediante el lenguaje visual Scratch 2.0, que Scratch4Robots 2.0 procesará y traducirá. Como resultado de este proceso se obtiene un nodo ROS, programado en Python, y un fichero de configuración, necesario para su ejecución. Este nodo ya estará preparado para ser ejecutado sobre drones y robots Turtlebots.\\
 
-Después de ver el diseño superficial, vamos a detallar como funciona de forma interna Scratch4Robots 2.0. En el siguiente esquema podemos apreciar los componentes internos en los que se basa la herramienta.\\
+Después de ver el diseño superficial se puede detallar como funciona de forma interna Scratch4Robots 2.0. El siguiente esquema entra en el detalle de los componentes internos en los que se basa la herramienta.\\
 
 \begin{figure}[H]
     \centering
@@ -25,9 +25,9 @@ Después de ver el diseño superficial, vamos a detallar como funciona de forma 
   	\label{fig:s4r}
 \end{figure}
 
-En un primer apartado podemos ver los bloques visuales que soporta nuestra herramienta y de los que contiene la lógica suficiente para poder hacer uso de ellos. Estos bloques están divididos en tres grandes grupos, bloques genéricos, bloques perceptivos y bloques de movimiento.\\
+En un primer apartado se ven los bloques visuales que soporta la herramienta. Estos bloques están divididos en tres grandes grupos, bloques genéricos, bloques perceptivos y bloques de movimiento.\\
 
-Por otro lado vemos el módulo encargado de la traducción y generación del nodo ROS final. La traducción obtenida a partir del programa Scratch, será encapsulada en una plantilla que contiene toda la lógica necesaria para establecer las comunicaciones ROS con el drone o Turtlebot.
+Por otro lado, el módulo encargado de la traducción y generación del nodo ROS final. La traducción obtenida a partir del programa Scratch, será encapsulada en una plantilla que contiene toda la lógica necesaria para establecer las comunicaciones ROS con el drone o Turtlebot.
 
 \subsection{Plantillas}
 En el esquema en detalle definido anteriormente se introduce un elemento nuevo, de vital importancia en la ejecución de la herramienta y del que hasta ahora hemos hablado poco. Este elemento es la plantilla en la que se encapsula el código traducido del programa Scratch.\\
@@ -39,12 +39,12 @@ Esta plantilla tiene una función fundamental, que es la creación del nodo ejec
     \centering
     \includegraphics[scale=0.6]{img/s4r-diagrama-robot.png}
   	\caption{Esquema de comunicaciones ROS a través del nodo generado}
-  	\label{fig:s4r-esquema}
+  	\label{fig:s4r-esquema-4}
 \end{figure}
 
-Apoyándonos en la figura 4.3, vamos a explicar la lógica implementada tras esta plantilla.\\
+Con ayuda de la Figura 4.3, se explica la lógica implementada tras esta plantilla.\\
 
-Como hemos planteado anteriormente, la traducción final se encapsula en una plantilla común a drones y Turtlebots, que no es ni más ni menos que el Nodo ROS que vamos a ejecutar. De cara a simplificar el código de salida generado por nuestra herramienta, hemos agrupado la lógica referida al procesado de comunicaciones ROS en dos librerías, una para Turtlebots y otra drones. De ahí a que en la figura 4.3 se hayan dividido estas dos partes. Entrando en detalle mostramos el código simplificado del nodo final generado.\\
+Como se plantea anteriormente, la traducción final se encapsula en una plantilla común a drones y Turtlebots, que no es ni más ni menos que el Nodo ROS que vamos a ejecutar. De cara a simplificar el código de salida generado por Scartch4Robots, se ha agrupado la lógica referida al procesado de comunicaciones ROS en dos librerías, una para Turtlebots y otra drones. De ahí a que en la figura 4.3 se hayan dividido estas dos partes. Entrando en detalle se puede apreciar el código simplificado del nodo final generado.\\
 
 \begin{lstlisting}[language=python,firstnumber=1]
 #!/usr/bin/env python
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
 \end{lstlisting}
 
-Como hemos comentado, la lógica referente a ROS se aplica a través de dos librerñias, \textit{drone} y \textit{robot}. Entrando en más detalle de estas librerías, vamos a ver como realiza la suscripción y publicación en los tópicos desde una de ellas, con fragmentos de códigos obtenidos de la aplicación.\\
+La lógica referente a ROS se aplica a través de dos librerías, \textit{drone} y \textit{robot}. Entrando en más detalle de estas librerías, se define como realiza la suscripción y publicación en los tópicos desde una de ellas, con fragmentos de códigos obtenidos de la aplicación.\\
 
 \begin{lstlisting}[language=python,firstnumber=1]
 import config
@@ -97,11 +97,11 @@ class Robot():
 		return self.__pose3d_client.getPose3d()
 \end{lstlisting}
 
-Describiendo el fragmento de código anterior y como se aprecia en el esquema de más arriba, nuestro nodo ROS en Python, a través del objeto Python \textit{Robot}, establece las comunicaciones ROS al iniciarse por primera vez. Esto se consigue con la carga de propiedades del fichero de configuración que se le pasa como argumento. Estas propiedades como hemos comentado anteriormente serán los tópicos a los que se conectará nuestro nodo. Se realizará la suscripción o publicación a cada tópico de manera individual. En este caso y observando el código,  usamos el objeto \textit{ListenerPose3d}, para conectarnos al tópico de el que obtendremos la información publicada por el sensor de odometría del robot, del mismo modo se hace con \textit{PublisherMotors} para el uso de los motores del robot.\\
+Describiendo el fragmento de código anterior y como se aprecia en el esquema de más arriba, nuestro nodo ROS en Python, a través del objeto Python \textit{Robot}, establece las comunicaciones ROS al iniciarse por primera vez. Esto se consigue con la carga de propiedades del fichero de configuración que se le pasa como argumento. Estas propiedades como hemos comentado anteriormente serán los tópicos a los que se conectará nuestro nodo. Se realizará la suscripción o publicación a cada tópico de manera individual. En este caso y observando el código,  se utiliza el objeto \textit{ListenerPose3d}, para realizar la conexión al tópico de el que se obtendrá la información publicada por el sensor de odometría del robot, del mismo modo se hace con \textit{PublisherMotors} para el uso de los motores del robot.\\
 
 En resumidas cuentas, al iniciarse el objeto Python, \textit{Robot} o \textit{Drone}, según se esté usando un tipo u otro, éste realiza la suscripción a todos los tópicos a través de la creación de un \textit{cliente} por cada una de estas suscripciones. Estos \textit{clientes} ya contienen métodos desde los que obtener mediante comunicaciones ROS, la información final tal y como la esperamos.\\
 
-En el siguiente extracto de código se aprecia simplificado el detalle de una de los clientes que realizan la suscripción, y de los obtenemos información del robo, a través de mensajes ROS, publicados en un tópico.
+En el siguiente extracto de código se aprecia simplificado el detalle de una de los clientes que realizan la suscripción, y de los que obtiene información del robot, a través de mensajes ROS, publicados en un tópico.
 
 \begin{lstlisting}[language=python,firstnumber=1]
 # modulo python oficial ros
@@ -133,21 +133,19 @@ class ListenerPose3d:
 
 Este mismo procedimiento hay que seguirlo para cada uno de los posibles tópicos ROS que necesite nuestra aplicación, por ejemplo, uno para dar velocidad a los distintos motores, otro para el sensor láser, cámaras incrustadas en el robot etcétera.\\
 
-Con todo esto se puede apreciar la complejidad de la que evadimos al usuario, siendo para él, un simple ejecutable o nodo, completamente operativo, generado a través de nuestra aplicación. Una vez lanzado el nodo habremos sido capaces de aplicar una lógica programada en Scratch sobre un robot en un entorno simulado. 
+Con todo esto se puede apreciar la complejidad de la que evadimos al usuario, siendo para él, un simple ejecutable o nodo, completamente operativo, generado a través de nuestra aplicación. Una vez lanzado el nodo, se habrá conseguido aplicar una lógica programada en Scratch, sobre un robot en un entorno simulado. 
 
 
 \section{Traducción de bloques}
-Una vez entendido el funcionamiento de la plantilla encargada de toda la lógica de funcionamiento sobre comunicaciones ROS, y volviendo a la figura 4.2, vamos a especificar como se lleva a cabo la traducción del programa Scratch y las mejoras que hemos llevado a cabo en este proceso.\\
+Una vez entendido el funcionamiento de la plantilla encargada de toda la lógica de funcionamiento sobre comunicaciones ROS, y volviendo a la figura 4.2, se especifica como se lleva a cabo la traducción del programa Scratch y las mejoras que se han llevado a cabo en este proceso.\\
 
-Esta labor de traducción la realizamos a través del uso de la bibliotea Kurt, vamos a estudiar más a fondo como trabaja la esta biblioteca y cómo nos ha ayudado en la traducción de bloques.\\
+Esta labor de traducción se consigue a través del uso de la biblioteca Kurt. Es una biblioteca de Python que permite la manipulación compleja de proyectos Scratch (archivos .sb o .sb2) a través de simples comandos de Python. Incluye un decompilador, que permite que un proyecto se cargue en un conjunto de objetos de Python, y un compilador que permite el empaquetamiento de un conjunto de \textit{scripts} de imágenes / texto en proyectos Scratch.\\
 
-Kurt es una biblioteca de Python que permite la manipulación compleja de proyectos Scratch (archivos .sb o .sb2) a través de simples comandos de Python. Incluye un decompilador, que permite que un proyecto se cargue en un conjunto de objetos de Python, y un compilador que permite el empaquetamiento de un conjunto de \textit{scripts} de imágenes / texto en proyectos Scratch.\\
-
-En este proyecto se ha utilizado una versión\footnote{\url{https://pypi.org/project/jderobot-kurt/}} mejorada de esta biblioteca, con ciertas adaptaciones para el tratamiento de extensiones externas como la nuestra. Kurt define los bloques usados por Scratch como objetos JSON, en esta nueva versión se agrega un fichero con la configuración de nuestros bloques como objetos JSON. De esta forma se agrega la capacidad de obtener la información de los bloques de nuestra extensión.\\
+En este proyecto se ha utilizado una versión\footnote{\url{https://pypi.org/project/jderobot-kurt/}} mejorada de esta biblioteca, con ciertas adaptaciones para el tratamiento de extensiones externas como la generada por Scratch4Robots 2.0, y de la que se hablará en posteriores secciones. Kurt define los bloques usados por Scratch como objetos JSON, en esta nueva versión se agrega un fichero con la configuración de los bloques como objetos JSON. De esta forma se agrega la capacidad de obtener la información de los bloques de nuestra extensión.\\
 
 La clase principal de kurt almacena el contenido de un archivo de proyecto Scratch. Los contenidos incluyen variables globales y listas, el escenario y los \textit{sprites}, cada uno con sus propios \textit{scripts}, sonidos, variables y listas.\\
 
-Una vez obtenido el contenido de un proyecto Scratch en un objeto Python, con el siguiente fragmento de código somos capaces de obtener el \textit{strings} representativo de cada bloque.\\
+Una vez obtenido el contenido de un proyecto Scratch en un objeto Python, con el siguiente fragmento de código se consigue obtener el \textit{strings} representativo de cada bloque.\\
 
 \begin{lstlisting}[language=python,firstnumber=1]
 # load the scratch project
@@ -165,11 +163,11 @@ for b in s.blocks:
 	print(b.stringify())
 \end{lstlisting}
 
-Una vez tenemos la lista de los \textit{strings} equivalentes a los bloques del proyecto Scratch, hay que realizar una tarea de transformación de estas a código Python.\\
+Una vez se tiene la lista de las \textit{strings} equivalentes a los bloques del proyecto Scratch, hay que realizar una tarea de transformación de estas a código Python.\\
 
 En este trabajo se modifica de forma notable la forma en la que se realizaba de forma inicial esta traducción, agregando una gran cantidad de bloques soportados y añadiendo un grado de recursividad que permite la traducción de bloques anidados. El soporte de bloques anidados nos permite realizar acciones de mayor complejidad dentro del entorno Scratch, como pueden ser bucles en los que se definen flujos condicionales complejos.\\
 
-En la traducción nos apoyamos de unos diccionarios Python en los que mapeamos el string equivalente al bloque Scratch con el equivalente Python que queremos sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando Python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por nuestra extensión debemos de crear un método específico que contenga toda la lógica a implementar como hemos visto anteriormente en la descripción de nuestros bloques.\\
+La traducción se apoya de unos diccionarios Python en los que se mapea el string equivalente al bloque Scratch con el equivalente Python que se desea sustituir, esto nos lleva al último punto de nuestro desarrollo. Para ciertos bloques de Scratch existe una traducción directa a un comando Python como ya hemos visto antes. Mientras que para los bloques robóticos definidos por la extensión que aporta Scratch4Robots 2.0, se debe crear un método específico que contenga toda la lógica a .\\
 
 \section{Desarrollo de bloques}
 \label{sec:desarrollo-de-bloques}
@@ -232,14 +230,14 @@ Se pueden añadir cero o más valores de parámetros predeterminados
 
 \item \textbf{Menús desplegables}:
 
-Los bloques que definimos pueden hacer uso de parámetros de menú, los cuales definiremos de dos formas:
+Los bloques que se definen pueden hacer uso de parámetros de menú, los cuales definiremos de dos formas:
 \begin{itemize}
 \item \%m.menuName - parámetro de menú (no editable), proporciona un sencillo espacio para los parámetros del menú desplegable.
 \item \%d.menuName - parámetro de número editable con menú, proporciona una ranura de parámetro numérico con un menú auxiliar.
 \end{itemize}
 \end{itemize}
 
-Con todo esto podemos entender la definición de alguno de nuestros bloques como podemos en el siguiente extracto de código, en el que se ve la definición de algunos de nuestros bloques.
+Con todo esto se puede entender la definición de alguno de nuestros bloques.En el siguiente extracto de código se ve la definición de algunos de los bloques desarrollados para la herramienta.
 \begin{nobreak} 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -261,9 +259,9 @@ Con todo esto podemos entender la definición de alguno de nuestros bloques como
 \end{nobreak} 
 
 \subsection{Bloques genéricos}
-Antes de comenzar con los bloques propios a nuestra extensión vamos a necesitar una serie de bloques genéricos que nos ayuden a realizar lógica básica de programación como pueden ser operadores matemáticos, operadores lógicos y sentencias básicas de programación. Scratch ya nos ofrece estos bloques por definición, por lo que no hará falta agregarlos a nuestra extensión específica, solamente nos encargaremos de su posterior traducción a código Python.\\
+Antes de comenzar con los bloques propios a la extensión, vamos a necesitar una serie de bloques genéricos que ayuden a realizar lógica básica de programación, como pueden ser operadores matemáticos, operadores lógicos y sentencias básicas de programación. Scratch ya ofrece estos bloques por definición, por lo que no hará falta agregarlos a la extensión específica, solamente se realiza su posterior traducción a código Python.\\
 
-A continuación mostramos todos los bloques genéricos de los que podemos hacer uso desde la herramienta Scratch4Robots, ya que hemos implementado su traducción a Python.
+A continuación se muestran todos los bloques genéricos de los que se puede hacer uso desde la herramienta Scratch4Robots, ya que se ha implementado su traducción a Python.
 
 \begin{itemize}
 \item \textbf{Bloques de operadores matemáticos}:
@@ -350,7 +348,7 @@ En este trabajo se ha realizado una refactorización completa de todos los bloqu
 
 Cabe destacar de estos bloques que una vez traducidos al nodo final, que se consigue implementar el funcionamiento de drones bajo comunicación ROS, ésto es algo elaborado completamente en este trabajo.\\
 
-Para ello nos apoyamos en MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, puente oficial entre nodos ROS y Mavlink\footnote{\url{https://github.com/mavlink}}, el protocolo de comunicación estándar para drones.
+Para ello se utiliza MAVROS\footnote{\url{http://wiki.ros.org/mavros}}, puente oficial entre nodos ROS y Mavlink\footnote{\url{https://github.com/mavlink}}, el protocolo de comunicación estándar para drones.
 
 \begin{itemize}
 \item \textbf{Bloques perceptivos}:
@@ -584,9 +582,9 @@ Con su traducción Python:\\
 	\end{itemize}
 \end{itemize}
 
-Con esto se definen los bloques pertenecientes a nuestra extensión, de la forma en que Scratch los muestra y la traducción de cada uno de ellos llevada, de una forma simplificada. Se aprecia que se trata de robots sofisticados, con cierta complejidad. La cual hacemos transparente para el usuario, simplificando toda la lógica que existe tras cada robot, en simples e intuitivos bloques gráficos.
+Con esto se definen los bloques pertenecientes a la extensión de Scratch4Robots 2.0, de la forma en que Scratch los muestra y la traducción de cada uno de ellos llevada, de una forma simplificada. Se aprecia que se trata de robots sofisticados, con cierta complejidad, la cual es transparente para el usuario. Se ha simplificado toda la lógica que existe tras cada robot, en simples e intuitivos bloques gráficos.\\
 
-En este trabajo hemos refactorizado la totalidad de la lógica tras los bloques robóticos, dándole una mayor coherencia a todos ellos. Además de crear lógica completamente nueva para ciertos bloques agregados en esta versión. Cabe destacar el bloque referente a la detección de objetos de un cierto color.\\
+En este trabajo se refactoriza la totalidad de la lógica tras los bloques robóticos, dándole una mayor coherencia a todos ellos. Además de crear lógica completamente nueva para ciertos bloques agregados en esta versión. Cabe destacar el bloque referente a la detección de objetos de un cierto color.\\
 
 
 
